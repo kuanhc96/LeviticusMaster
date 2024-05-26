@@ -1,36 +1,98 @@
 package leviticus.master.entity;
 
 import jakarta.persistence.MappedSuperclass;
-
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @MappedSuperclass
-public abstract class AbstractBaseEntity {
-    private Timestamp lchgTime;
+public abstract class AbstractTaskEntity extends AbstractEntity {
 
-    public AbstractBaseEntity() {
-        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-        this.lchgTime = Timestamp.valueOf(now);
+    private Double accuracy;
+
+    private String classificationReport;
+
+    private Double timeElapsed;
+
+    private Boolean isComplete;
+
+    private String dataset;
+
+    public AbstractTaskEntity() {
+        super();
     }
 
-    public AbstractBaseEntity(Timestamp lchgTime) {
-        this.lchgTime = lchgTime;
+    public AbstractTaskEntity(Timestamp lchgTime) {
+        super(lchgTime);
     }
 
-    public Timestamp getLchgTime() {
-        return lchgTime;
+    public AbstractTaskEntity(
+            Double accuracy,
+            String classificationReport,
+            Double timeElapsed,
+            Boolean isComplete,
+            String dataset
+    ) {
+        super();
+        this.accuracy = accuracy;
+        this.classificationReport = classificationReport;
+        this.timeElapsed = timeElapsed;
+        this.isComplete = isComplete;
+        this.dataset = dataset;
     }
 
-    public void setLchgTime(Timestamp lchgTime) {
-        this.lchgTime = lchgTime;
+    public AbstractTaskEntity(
+            Timestamp lchgTime,
+            Double accuracy,
+            String classificationReport,
+            Double timeElapsed,
+            Boolean isComplete,
+            String dataset
+    ) {
+        super(lchgTime);
+        this.accuracy = accuracy;
+        this.classificationReport = classificationReport;
+        this.timeElapsed = timeElapsed;
+        this.isComplete = isComplete;
+        this.dataset = dataset;
     }
 
-    public void setLchgTime() {
-        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-        this.lchgTime = Timestamp.valueOf(now);
+    public Double getAccuracy() {
+        return accuracy;
+    }
 
+    public void setAccuracy(Double accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    public String getClassificationReport() {
+        return classificationReport;
+    }
+
+    public void setClassificationReport(String classificationReport) {
+        this.classificationReport = classificationReport;
+    }
+
+    public Double getTimeElapsed() {
+        return timeElapsed;
+    }
+
+    public void setTimeElapsed(Double timeElapsed) {
+        this.timeElapsed = timeElapsed;
+    }
+
+    public Boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(Boolean complete) {
+        isComplete = complete;
+    }
+
+    public String getDataset() {
+        return dataset;
+    }
+
+    public void setDataset(String dataset) {
+        this.dataset = dataset;
     }
 }
 

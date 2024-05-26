@@ -17,32 +17,20 @@ public class CNNModelParamsEntity extends AbstractModelParamsEntity {
         super();
     }
 
-    public CNNModelParamsEntity(Long trainId) {
-        super(trainId);
-    }
-
-    public CNNModelParamsEntity(Long trainId, Timestamp lchgTime) {
-        super(trainId, lchgTime);
+    public CNNModelParamsEntity(Timestamp lchgTime) {
+        super(lchgTime);
     }
 
     /** @noinspection checkstyle:ParameterNumber*/
     public CNNModelParamsEntity(
-            Long trainId,
-            Double accuracy,
-            String classificationReport,
-            Double trainTime,
             Integer resizedX,
             Integer resizedY,
             Integer numClasses,
             Integer batchSize,
-            Integer epochs
+            Integer epochs,
+            Long trainId
     ) {
-        super(
-                trainId,
-                accuracy,
-                classificationReport,
-                trainTime
-        );
+        super(trainId);
         this.resizedX = resizedX;
         this.resizedY = resizedY;
         this.numClasses = numClasses;
@@ -53,24 +41,15 @@ public class CNNModelParamsEntity extends AbstractModelParamsEntity {
 
     /** @noinspection checkstyle:ParameterNumber*/
     public CNNModelParamsEntity(
-            Long trainId,
-            Timestamp lchgTime,
-            Double accuracy,
-            String classificationReport,
-            Double trainTime,
             Integer resizedX,
             Integer resizedY,
             Integer numClasses,
             Integer batchSize,
-            Integer epochs
+            Integer epochs,
+            Long trainId,
+            Timestamp lchgTime
     ) {
-        super(
-                trainId,
-                lchgTime,
-                accuracy,
-                classificationReport,
-                trainTime
-        );
+        super(trainId, lchgTime);
         this.resizedX = resizedX;
         this.resizedY = resizedY;
         this.numClasses = numClasses;
