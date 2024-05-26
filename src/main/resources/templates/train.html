@@ -8,7 +8,7 @@
     <div>
         <h1>Train Request Form</h1>
     </div>
-    <form action="#" th:action="@{/jobs/submitSelection/}" th:object="${trainRequestFormModel}" method="post">
+    <form action="#" th:action="@{/jobs/submitSelection}" th:object="${trainRequestFormModel}" method="post">
         <div>
             <h2>Choose Classification Model Type</h2>
             <input type="radio" id="LBP" name="modelType" value="LocalBinaryPattern" th:field="*{modelType}"/>
