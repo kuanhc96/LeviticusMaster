@@ -51,19 +51,19 @@ public class TrainRequestFormModel {
         this.dataset = dataset;
     }
 
-    public Boolean getTrainOnly() {
+    public Boolean getIsTrainOnly() {
         return isTrainOnly;
     }
 
-    public void setTrainOnly(Boolean trainOnly) {
+    public void setIsTrainOnly(Boolean trainOnly) {
         isTrainOnly = trainOnly;
     }
 
-    public Boolean getCrossValidated() {
+    public Boolean getIsCrossValidated() {
         return isCrossValidated;
     }
 
-    public void setCrossValidated(Boolean crossValidated) {
+    public void setIsCrossValidated(Boolean crossValidated) {
         isCrossValidated = crossValidated;
     }
 }
