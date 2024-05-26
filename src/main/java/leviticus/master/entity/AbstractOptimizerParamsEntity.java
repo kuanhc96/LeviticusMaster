@@ -1,9 +1,9 @@
 package leviticus.master.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import leviticus.master.enums.OptimizerType;
 
-@Entity
+@MappedSuperclass
 public abstract class AbstractOptimizerParamsEntity {
     private Long trainId;
 
