@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class PredictTaskEntityService {
+public class PredictTaskEntityService extends BaseService<PredictTaskEntity> {
     @Autowired
     private IPredictTaskRepository predictTaskRepository;
     public PredictTaskEntity save(PredictTaskEntity trainTask) {

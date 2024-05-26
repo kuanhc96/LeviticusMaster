@@ -13,7 +13,9 @@ public class LBPModelParamsEntity extends AbstractModelParamsEntity {
 
     private Integer radius;
 
-    public LBPModelParamsEntity() {}
+    public LBPModelParamsEntity() {
+        super();
+    }
 
     public LBPModelParamsEntity(
             Long trainId,
