@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class TrainTaskEntityService {
+public class TrainTaskEntityService extends BaseService<TrainTaskEntity> {
     @Autowired
     private ITrainTaskRepository trainTaskRepository;
 
