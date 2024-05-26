@@ -90,6 +90,7 @@ public class TrainTaskEntity {
         return isTrainOnly;
     }
 
+    /** @noinspection checkstyle:HiddenField*/
     public void setTrainOnly(Boolean isTrainOnly) {
         this.isTrainOnly = isTrainOnly;
     }
