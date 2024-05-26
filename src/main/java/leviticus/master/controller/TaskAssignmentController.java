@@ -62,28 +62,31 @@ public class TaskAssignmentController {
 
     @GetMapping(value = "/train")
     public String getForm(Model model) {
-        model.addAttribute("selectionForm", new TrainRequestFormModel());
+        model.addAttribute("trainRequestFormModel", new TrainRequestFormModel());
 
         return "train";
     }
 
     @PostMapping(value = "/submitSelection")
-    public String submitForm(TrainRequestFormModel selectionForm, Model model) {
+    public String submitForm(TrainRequestFormModel trainRequestFormModel, Model model) {
         LOG.info("entered into submitSelection API");
-        ClassificationModelType modelType = selectionForm.getModelType();
-        OptimizerType optimizerType = selectionForm.getOptimizerType();
-        String dataset = selectionForm.getDataset();
-        Boolean isTrainOnly = selectionForm.getTrainOnly();
-        Boolean isCrossValidated = selectionForm.getCrossValidated();
+        ClassificationModelType modelType = trainRequestFormModel.getModelType();
+        OptimizerType optimizerType = trainRequestFormModel.getOptimizerType();
+        String dataset = trainRequestFormModel.getDataset();
+        Boolean isTrainOnly = trainRequestFormModel.getIsTrainOnly();
+        Boolean isCrossValidated = trainRequestFormModel.getIsCrossValidated();
 
         TrainTaskEntity trainEntity = new TrainTaskEntity(
                 modelType,
                 optimizerType,
                 null,
-                dataset,
-                false,
                 isCrossValidated,
-                isTrainOnly
+                isTrainOnly,
+                null,
+                null,
+                0.0,
+                false,
+                dataset
             );
 
         TrainTaskEntity savedEntity = trainService.save(trainEntity);
