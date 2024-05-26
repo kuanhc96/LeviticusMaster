@@ -5,7 +5,7 @@ import jakarta.persistence.MappedSuperclass;
 import java.sql.Timestamp;
 
 @MappedSuperclass
-public abstract class AbstractModelParamsEntity {
+public abstract class AbstractModelParamsEntity extends AbstractBaseEntity {
     private Long trainId;
 
     private Double accuracy;
@@ -14,22 +14,45 @@ public abstract class AbstractModelParamsEntity {
 
     private Double trainTime;
 
-    private Timestamp lchgTime;
+    public AbstractModelParamsEntity() {
+        super();
+    }
 
-    public AbstractModelParamsEntity() {}
+    public AbstractModelParamsEntity(Long trainId) {
+        super();
+        this.trainId = trainId;
+    }
+
+    public AbstractModelParamsEntity(Long trainId, Timestamp lchgTime) {
+        super(lchgTime);
+        this.trainId = trainId;
+    }
 
     public AbstractModelParamsEntity(
             Long trainId,
             Double accuracy,
             String classificationReport,
-            Double trainTime,
-            Timestamp lchgTime
+            Double trainTime
     ) {
+        super();
         this.trainId = trainId;
         this.accuracy = accuracy;
         this.classificationReport = classificationReport;
         this.trainTime = trainTime;
-        this.lchgTime = lchgTime;
+    }
+
+    public AbstractModelParamsEntity(
+            Long trainId,
+            Timestamp lchgTime,
+            Double accuracy,
+            String classificationReport,
+            Double trainTime
+    ) {
+        super(lchgTime);
+        this.trainId = trainId;
+        this.accuracy = accuracy;
+        this.classificationReport = classificationReport;
+        this.trainTime = trainTime;
     }
 
     public Long getTrainId() {
@@ -63,11 +86,4 @@ public abstract class AbstractModelParamsEntity {
         this.trainTime = trainTime;
     }
 
-    public Timestamp getLchgTime() {
-        return lchgTime;
-    }
-
-    public void setLchgTime(Timestamp lchgTime) {
-        this.lchgTime = lchgTime;
-    }
 }
