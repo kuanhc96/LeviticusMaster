@@ -1,4 +1,4 @@
-package leviticus.master.entity;
+package leviticus.master.entity.taskEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
