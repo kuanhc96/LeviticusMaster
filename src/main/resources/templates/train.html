@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Train Request Form</title>
 </head>
 <body>
-$END$
+    <div>
+        <h1>Train Request Form</h1>
+    </div>
+    <form action="#" th:action="@{/jobs/submitSelection/}" method="post">
+        <div>
+            <h2>Choose Classification Model Type</h2>
+            <input type="radio" id="LBP" name="modelType" value="LocalBinaryPattern" th:field="*{modelType}"/>
+            <label for="LBP">Local Binary Pattern</label><br>
+            <input type="radio" id="miniVGG" name="modelType" value="MiniVGG" th:field="*{modelType}"/>
+            <label for="miniVGG">MiniVGG</label>
+        </div>
+        <div>
+            <h2>Choose Optimizer Type</h2>
+            <input type="radio" id="SGD" name="optimizerType" value="Stochastic Gradient Descent" th:field="*{optimizerType}"/>
+            <label for="SGD">Stochastic Gradient Descent</label><br>
+        </div>
+        <div>
+            <h2>Input Dataset Path</h2>
+            <label>Path:</label>
+            <input type="text" th:field="*{dataset}"/>
+        </div>
+        <div>
+            <h2>Perform Training Only? (No Test Set)</h2>
+            <input type="checkbox" id="trainOnly" th:field="*{isTrainOnly}" />
+            <label for="trainOnly">Train Only?</label><br/>
+        </div>
+        <div>
+            <h2>Perform Cross Validation Parameter Search?</h2>
+            <input type="checkbox" id="crossValidated" th:field="*{isCrossValidated}" />
+            <label for="crossValidated">Cross Validation Parameter Search?</label><br/>
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+    <button onclick="window.location.href='/jobs'">Back</button>
+
 </body>
 </html>
