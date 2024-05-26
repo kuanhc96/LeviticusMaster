@@ -2,7 +2,6 @@ package leviticus.master.entity.optimizerParamsEntity;
 
 import jakarta.persistence.Entity;
 import leviticus.master.entity.AbstractOptimizerParamsEntity;
-import leviticus.master.enums.OptimizerType;
 
 import java.sql.Timestamp;
 
@@ -18,11 +17,11 @@ public class SGDOptimizerParamsEntity extends AbstractOptimizerParamsEntity {
     }
 
     public SGDOptimizerParamsEntity(Long trainId) {
-        super(trainId, OptimizerType.SGD);
+        super(trainId);
     }
 
     public SGDOptimizerParamsEntity(Long trainId, Timestamp lchgTime) {
-        super(trainId, OptimizerType.SGD, lchgTime);
+        super(trainId, lchgTime);
     }
 
     public SGDOptimizerParamsEntity(
@@ -32,7 +31,7 @@ public class SGDOptimizerParamsEntity extends AbstractOptimizerParamsEntity {
             Double decayRate,
             Boolean nesterov
     ) {
-        super(trainId, OptimizerType.SGD);
+        super(trainId);
         this.learningRate = learningRate;
         this.momentum = momentum;
         this.decayRate = decayRate;
@@ -48,7 +47,7 @@ public class SGDOptimizerParamsEntity extends AbstractOptimizerParamsEntity {
             Double decayRate,
             Boolean nesterov
     ) {
-        super(trainId, OptimizerType.SGD, lchgTime);
+        super(trainId, lchgTime);
         this.learningRate = learningRate;
         this.momentum = momentum;
         this.decayRate = decayRate;

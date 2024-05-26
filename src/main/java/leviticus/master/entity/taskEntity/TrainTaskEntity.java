@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import leviticus.master.entity.AbstractBaseEntity;
 import leviticus.master.enums.ClassificationModelType;
+import leviticus.master.enums.OptimizerType;
 
 import java.sql.Timestamp;
 
@@ -16,6 +17,8 @@ public class TrainTaskEntity extends AbstractBaseEntity {
     private Long id;
 
     private ClassificationModelType modelType;
+
+    private OptimizerType optimizerType;
 
     private String weightsFile;
 
@@ -33,6 +36,7 @@ public class TrainTaskEntity extends AbstractBaseEntity {
 
     public TrainTaskEntity(
             ClassificationModelType modelType,
+            OptimizerType optimizerType,
             String weightsFile,
             String dataset,
             Boolean isComplete,
@@ -41,6 +45,7 @@ public class TrainTaskEntity extends AbstractBaseEntity {
     ) {
         super();
         this.modelType = modelType;
+        this.optimizerType = optimizerType;
         this.weightsFile = weightsFile;
         this.dataset = dataset;
         this.isComplete = isComplete;
@@ -51,6 +56,7 @@ public class TrainTaskEntity extends AbstractBaseEntity {
 
     public TrainTaskEntity(
             ClassificationModelType modelType,
+            OptimizerType optimizerType,
             String weightsFile,
             String dataset,
             Boolean isComplete,
@@ -60,6 +66,7 @@ public class TrainTaskEntity extends AbstractBaseEntity {
     ) {
         super(lchgTime);
         this.modelType = modelType;
+        this.optimizerType = optimizerType;
         this.weightsFile = weightsFile;
         this.dataset = dataset;
         this.isComplete = isComplete;
@@ -119,5 +126,13 @@ public class TrainTaskEntity extends AbstractBaseEntity {
 
     public void setCrossValidated(Boolean crossValidated) {
         isCrossValidated = crossValidated;
+    }
+
+    public OptimizerType getOptimizerType() {
+        return optimizerType;
+    }
+
+    public void setOptimizerType(OptimizerType optimizerType) {
+        this.optimizerType = optimizerType;
     }
 }
