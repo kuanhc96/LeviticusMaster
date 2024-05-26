@@ -1,20 +1,14 @@
 package leviticus.master.entity.taskEntity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import leviticus.master.entity.AbstractBaseEntity;
+import leviticus.master.entity.AbstractTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
 import leviticus.master.enums.OptimizerType;
 
 import java.sql.Timestamp;
 
 @Entity
-public class TrainTaskEntity extends AbstractBaseEntity {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+public class TrainTaskEntity extends AbstractTaskEntity {
 
     private ClassificationModelType modelType;
 
@@ -34,37 +28,23 @@ public class TrainTaskEntity extends AbstractBaseEntity {
         super();
     }
 
-    public TrainTaskEntity(
-            ClassificationModelType modelType,
-            OptimizerType optimizerType,
-            String weightsFile,
-            String dataset,
-            Boolean isComplete,
-            Boolean isCrossValidated,
-            Boolean isTrainOnly
-    ) {
-        super();
-        this.modelType = modelType;
-        this.optimizerType = optimizerType;
-        this.weightsFile = weightsFile;
-        this.dataset = dataset;
-        this.isComplete = isComplete;
-        this.isCrossValidated = isCrossValidated;
-        this.isTrainOnly = isTrainOnly;
+    public TrainTaskEntity(Timestamp lchgTime) {
+        super(lchgTime);
     }
 
-
     public TrainTaskEntity(
             ClassificationModelType modelType,
             OptimizerType optimizerType,
             String weightsFile,
-            String dataset,
-            Boolean isComplete,
             Boolean isCrossValidated,
             Boolean isTrainOnly,
-            Timestamp lchgTime
+            Double accuracy,
+            String classificationReport,
+            Double timeElapsed,
+            Boolean isComplete,
+            String dataset
     ) {
-        super(lchgTime);
+        super(accuracy, classificationReport, timeElapsed, isComplete, dataset);
         this.modelType = modelType;
         this.optimizerType = optimizerType;
         this.weightsFile = weightsFile;
@@ -74,9 +54,27 @@ public class TrainTaskEntity extends AbstractBaseEntity {
         this.isTrainOnly = isTrainOnly;
     }
 
-
-    public Long getId() {
-        return id;
+    public TrainTaskEntity(
+            ClassificationModelType modelType,
+            OptimizerType optimizerType,
+            String weightsFile,
+            Boolean isCrossValidated,
+            Boolean isTrainOnly,
+            Double accuracy,
+            String classificationReport,
+            Double timeElapsed,
+            Boolean isComplete,
+            String dataset,
+            Timestamp lchgTime
+    ) {
+        super(lchgTime, accuracy, classificationReport, timeElapsed, isComplete, dataset);
+        this.modelType = modelType;
+        this.optimizerType = optimizerType;
+        this.weightsFile = weightsFile;
+        this.dataset = dataset;
+        this.isComplete = isComplete;
+        this.isCrossValidated = isCrossValidated;
+        this.isTrainOnly = isTrainOnly;
     }
 
     public ClassificationModelType getModelType() {

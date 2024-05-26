@@ -1,54 +1,39 @@
 package leviticus.master.entity.taskEntity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import leviticus.master.entity.AbstractBaseEntity;
+import leviticus.master.entity.AbstractTaskEntity;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
-public class PredictTaskEntity extends AbstractBaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class PredictTaskEntity extends AbstractTaskEntity {
 
+    // foreign key
     private Long trainId;
 
-    private Double accuracy;
-
-    private String classificationReport;
-
     private String results;
-
-    private Boolean isComplete;
-
-    private String dataset;
-
-    private Double predictTime;
 
     public PredictTaskEntity() {
         super();
     }
 
+    public PredictTaskEntity(Timestamp lchgTime) {
+        super(lchgTime);
+    }
+
     public PredictTaskEntity(
             Long trainId,
+            String results,
             Double accuracy,
             String classificationReport,
-            String results,
+            Double timeElapsed,
             Boolean isComplete,
-            String dataset,
-            Double predictTime
+            String dataset
     ) {
-        super();
+        super(accuracy, classificationReport, timeElapsed, isComplete, dataset);
         this.trainId = trainId;
-        this.accuracy = accuracy;
-        this.classificationReport = classificationReport;
         this.results = results;
-        this.isComplete = isComplete;
-        this.dataset = dataset;
-        this.predictTime = predictTime;
     }
 
 
@@ -59,37 +44,12 @@ public class PredictTaskEntity extends AbstractBaseEntity {
             String results,
             Boolean isComplete,
             String dataset,
-            Double predictTime,
+            Double timeElapsed,
             Timestamp lchgTime
     ) {
-        super(lchgTime);
+        super(lchgTime, accuracy, classificationReport, timeElapsed, isComplete, dataset);
         this.trainId = trainId;
-        this.accuracy = accuracy;
-        this.classificationReport = classificationReport;
         this.results = results;
-        this.isComplete = isComplete;
-        this.dataset = dataset;
-        this.predictTime = predictTime;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Double getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(Double accuracy) {
-        this.accuracy = accuracy;
-    }
-
-    public String getClassificationReport() {
-        return classificationReport;
-    }
-
-    public void setClassificationReport(String classificationReport) {
-        this.classificationReport = classificationReport;
     }
 
     public String getResults() {
@@ -106,30 +66,6 @@ public class PredictTaskEntity extends AbstractBaseEntity {
 
     public void setTrainId(Long trainId) {
         this.trainId = trainId;
-    }
-
-    public Boolean isComplete() {
-        return isComplete;
-    }
-
-    public void setComplete(Boolean complete) {
-        isComplete = complete;
-    }
-
-    public String getDataset() {
-        return dataset;
-    }
-
-    public void setDataset(String dataset) {
-        this.dataset = dataset;
-    }
-
-    public Double getPredictTime() {
-        return predictTime;
-    }
-
-    public void setPredictTime(Double predictTime) {
-        this.predictTime = predictTime;
     }
 
 }

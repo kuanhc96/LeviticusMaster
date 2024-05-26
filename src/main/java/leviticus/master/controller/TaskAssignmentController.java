@@ -1,12 +1,21 @@
 package leviticus.master.controller;
 
+import jakarta.annotation.PostConstruct;
+import leviticus.master.entity.taskEntity.TrainTaskEntity;
+import leviticus.master.enums.ClassificationModelType;
+import leviticus.master.enums.OptimizerType;
+import leviticus.master.model.TrainRequestFormModel;
+import leviticus.master.service.ModelParamsEntityService;
+import leviticus.master.service.OptimizerParamsEntityService;
+import leviticus.master.service.PredictTaskEntityService;
+import leviticus.master.service.TrainTaskEntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
@@ -14,10 +23,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/jobs")
@@ -25,27 +32,71 @@ public class TaskAssignmentController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskAssignmentController.class);
 
-    @GetMapping
-    public String getJobs() {
-        return "jobs";
+    @Autowired
+    private ModelParamsEntityService modelService;
+
+    @Autowired
+    private OptimizerParamsEntityService optimizerService;
+
+    @Autowired
+    private PredictTaskEntityService predictService;
+
+    @Autowired
+    private TrainTaskEntityService trainService;
+
+    private Map<ClassificationModelType, Integer> router;
+
+    @PostConstruct
+    public void setup() {
+        router = new HashMap<>();
+        router.put(ClassificationModelType.LBP, 8000);
+        router.put(ClassificationModelType.MINI_VGG, 8001);
+
     }
 
-    @PostMapping(value = "/LBP")
-    public String create(Model model) {
-        LOG.info("entered into LBP API");
-        String trainTaskPrefix = "TR-";
-        Random rand = new Random();
-        Long id = rand.nextLong();
-        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyyMMdd");
-        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HHmmss");
-        String now = "-" + LocalDate.now().format(formatDate);
-        now += LocalTime.now().format(formatTime);
-        String trainTaskId = trainTaskPrefix + id + now;
+
+    @GetMapping
+    public String getJobs() {
+        return "landing";
+    }
+
+    @GetMapping(value = "/train")
+    public String getForm(Model model) {
+        model.addAttribute("trainRequestFormModel", new TrainRequestFormModel());
+
+        return "train";
+    }
+
+    @PostMapping(value = "/submitSelection")
+    public String submitForm(TrainRequestFormModel trainRequestFormModel, Model model) {
+        LOG.info("entered into submitSelection API");
+        ClassificationModelType modelType = trainRequestFormModel.getModelType();
+        OptimizerType optimizerType = trainRequestFormModel.getOptimizerType();
+        String dataset = trainRequestFormModel.getDataset();
+        Boolean isTrainOnly = trainRequestFormModel.getIsTrainOnly();
+        Boolean isCrossValidated = trainRequestFormModel.getIsCrossValidated();
+
+        TrainTaskEntity trainEntity = new TrainTaskEntity(
+                modelType,
+                optimizerType,
+                null,
+                isCrossValidated,
+                isTrainOnly,
+                null,
+                null,
+                0.0,
+                false,
+                dataset
+            );
+
+        TrainTaskEntity savedEntity = trainService.save(trainEntity);
+        Long trainId = savedEntity.getId();
+
         String jsonData = "" +
                 "{" +
-                "\"taskId\":\"" + trainTaskId + "\"," +
-                "\"trainOnly\":false," +
-                "\"dataset\":\"/app/train/texture_dataset\"," +
+                "\"taskId\":\"" + trainId + "\"," +
+                "\"trainOnly\":\"" + isTrainOnly + "\"," +
+                "\"dataset\":\"" + dataset + "\"," +
                 "\"numPoints\":24," +
                 "\"radius\":8," +
                 "\"C\":89.0" +
@@ -54,7 +105,7 @@ public class TaskAssignmentController {
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8000/train"))
+                .uri(URI.create("http://localhost:" + router.get(modelType) + "/train"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonData))
                 .build();

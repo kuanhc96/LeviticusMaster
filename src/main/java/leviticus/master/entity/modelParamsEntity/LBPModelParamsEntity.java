@@ -17,22 +17,31 @@ public class LBPModelParamsEntity extends AbstractModelParamsEntity {
         super();
     }
 
+    public LBPModelParamsEntity(Timestamp lchgTime) {
+        super(lchgTime);
+    }
+
     public LBPModelParamsEntity(
-            Long trainId,
-            Double accuracy,
-            String classificationReport,
-            Double trainTime,
-            Timestamp lchgTime,
             Double c,
             Integer numPoints,
-            Integer radius) {
-        super(
-                trainId,
-                accuracy,
-                classificationReport,
-                trainTime,
-                lchgTime
-        );
+            Integer radius,
+            Long trainId
+    ) {
+        super(trainId);
+        this.c = c;
+        this.numPoints = numPoints;
+        this.radius = radius;
+
+    }
+
+    public LBPModelParamsEntity(
+            Double c,
+            Integer numPoints,
+            Integer radius,
+            Long trainId,
+            Timestamp lchgTime
+    ) {
+        super(trainId, lchgTime);
         this.c = c;
         this.numPoints = numPoints;
         this.radius = radius;
