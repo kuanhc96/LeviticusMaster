@@ -1,15 +1,16 @@
-package leviticus.master.entity;
+package leviticus.master.entity.taskEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import leviticus.master.entity.AbstractBaseEntity;
 import leviticus.master.enums.ClassificationModelType;
 
 import java.sql.Timestamp;
 
 @Entity
-public class TrainTaskEntity {
+public class TrainTaskEntity extends AbstractBaseEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
@@ -26,10 +27,27 @@ public class TrainTaskEntity {
 
     private Boolean isTrainOnly;
 
-    private Timestamp lchgTime;
+    public TrainTaskEntity() {
+        super();
+    }
 
+    public TrainTaskEntity(
+            ClassificationModelType modelType,
+            String weightsFile,
+            String dataset,
+            Boolean isComplete,
+            Boolean isCrossValidated,
+            Boolean isTrainOnly
+    ) {
+        super();
+        this.modelType = modelType;
+        this.weightsFile = weightsFile;
+        this.dataset = dataset;
+        this.isComplete = isComplete;
+        this.isCrossValidated = isCrossValidated;
+        this.isTrainOnly = isTrainOnly;
+    }
 
-    public TrainTaskEntity() {}
 
     public TrainTaskEntity(
             ClassificationModelType modelType,
@@ -40,13 +58,13 @@ public class TrainTaskEntity {
             Boolean isTrainOnly,
             Timestamp lchgTime
     ) {
+        super(lchgTime);
         this.modelType = modelType;
         this.weightsFile = weightsFile;
         this.dataset = dataset;
         this.isComplete = isComplete;
         this.isCrossValidated = isCrossValidated;
         this.isTrainOnly = isTrainOnly;
-        this.lchgTime = lchgTime;
     }
 
 
@@ -93,14 +111,6 @@ public class TrainTaskEntity {
     /** @noinspection checkstyle:HiddenField*/
     public void setTrainOnly(Boolean isTrainOnly) {
         this.isTrainOnly = isTrainOnly;
-    }
-
-    public Timestamp getLchgTime() {
-        return lchgTime;
-    }
-
-    public void setLchgTime(Timestamp lchgTime) {
-        this.lchgTime = lchgTime;
     }
 
     public Boolean isCrossValidated() {

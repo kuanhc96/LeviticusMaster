@@ -1,14 +1,15 @@
-package leviticus.master.entity;
+package leviticus.master.entity.taskEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import leviticus.master.entity.AbstractBaseEntity;
 
 import java.sql.Timestamp;
 
 @Entity
-public class PredictTaskEntity {
+public class PredictTaskEntity extends AbstractBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -27,10 +28,29 @@ public class PredictTaskEntity {
 
     private Double predictTime;
 
-    private Timestamp lchgTime;
-
     public PredictTaskEntity() {
+        super();
     }
+
+    public PredictTaskEntity(
+            Long trainId,
+            Double accuracy,
+            String classificationReport,
+            String results,
+            Boolean isComplete,
+            String dataset,
+            Double predictTime
+    ) {
+        super();
+        this.trainId = trainId;
+        this.accuracy = accuracy;
+        this.classificationReport = classificationReport;
+        this.results = results;
+        this.isComplete = isComplete;
+        this.dataset = dataset;
+        this.predictTime = predictTime;
+    }
+
 
     public PredictTaskEntity(
             Long trainId,
@@ -42,6 +62,7 @@ public class PredictTaskEntity {
             Double predictTime,
             Timestamp lchgTime
     ) {
+        super(lchgTime);
         this.trainId = trainId;
         this.accuracy = accuracy;
         this.classificationReport = classificationReport;
@@ -49,7 +70,6 @@ public class PredictTaskEntity {
         this.isComplete = isComplete;
         this.dataset = dataset;
         this.predictTime = predictTime;
-        this.lchgTime = lchgTime;
     }
 
     public Long getId() {
@@ -88,7 +108,7 @@ public class PredictTaskEntity {
         this.trainId = trainId;
     }
 
-    public Boolean getComplete() {
+    public Boolean isComplete() {
         return isComplete;
     }
 
@@ -112,12 +132,5 @@ public class PredictTaskEntity {
         this.predictTime = predictTime;
     }
 
-    public Timestamp getLchgTime() {
-        return lchgTime;
-    }
-
-    public void setLchgTime(Timestamp lchgTime) {
-        this.lchgTime = lchgTime;
-    }
 }
 

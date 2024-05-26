@@ -1,7 +1,6 @@
 package leviticus.master.repository;
 
-import leviticus.master.entity.TrainTaskEntity;
-import org.springframework.data.repository.CrudRepository;
+import leviticus.master.entity.taskEntity.TrainTaskEntity;
 
-public interface ITrainTaskRepository extends CrudRepository<TrainTaskEntity, Long> {
+public interface ITrainTaskRepository extends IBaseRepository<TrainTaskEntity, Long> {
 }

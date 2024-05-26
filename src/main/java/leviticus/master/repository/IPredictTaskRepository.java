@@ -1,7 +1,6 @@
 package leviticus.master.repository;
 
-import leviticus.master.entity.PredictTaskEntity;
-import org.springframework.data.repository.CrudRepository;
+import leviticus.master.entity.taskEntity.PredictTaskEntity;
 
-public interface IPredictTaskRepository extends CrudRepository<PredictTaskEntity, Long> {
+public interface IPredictTaskRepository extends IBaseRepository<PredictTaskEntity, Long> {
 }
