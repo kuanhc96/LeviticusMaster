@@ -1,11 +1,10 @@
 package leviticus.master.entity;
 
-import jakarta.persistence.Entity;
-import org.springframework.util.StringUtils;
+import jakarta.persistence.MappedSuperclass;
 
 import java.sql.Timestamp;
 
-@Entity
+@MappedSuperclass
 public abstract class AbstractModelParamsEntity {
     private Long trainId;
 

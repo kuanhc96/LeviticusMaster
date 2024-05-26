@@ -22,9 +22,12 @@ public class TrainTaskEntity {
 
     private Boolean isComplete;
 
-    private Boolean trainOnly;
+    private Boolean isCrossValidated;
+
+    private Boolean isTrainOnly;
 
     private Timestamp lchgTime;
+
 
     public TrainTaskEntity() {}
 
@@ -33,14 +36,16 @@ public class TrainTaskEntity {
             String weightsFile,
             String dataset,
             Boolean isComplete,
-            Boolean trainOnly,
+            Boolean isCrossValidated,
+            Boolean isTrainOnly,
             Timestamp lchgTime
     ) {
         this.modelType = modelType;
         this.weightsFile = weightsFile;
         this.dataset = dataset;
         this.isComplete = isComplete;
-        this.trainOnly = trainOnly;
+        this.isCrossValidated = isCrossValidated;
+        this.isTrainOnly = isTrainOnly;
         this.lchgTime = lchgTime;
     }
 
@@ -73,7 +78,7 @@ public class TrainTaskEntity {
         this.dataset = dataset;
     }
 
-    public Boolean getComplete() {
+    public Boolean isComplete() {
         return isComplete;
     }
 
@@ -81,12 +86,13 @@ public class TrainTaskEntity {
         isComplete = complete;
     }
 
-    public Boolean getTrainOnly() {
-        return trainOnly;
+    public Boolean isTrainOnly() {
+        return isTrainOnly;
     }
 
-    public void setTrainOnly(Boolean trainOnly) {
-        this.trainOnly = trainOnly;
+    /** @noinspection checkstyle:HiddenField*/
+    public void setTrainOnly(Boolean isTrainOnly) {
+        this.isTrainOnly = isTrainOnly;
     }
 
     public Timestamp getLchgTime() {
@@ -95,5 +101,13 @@ public class TrainTaskEntity {
 
     public void setLchgTime(Timestamp lchgTime) {
         this.lchgTime = lchgTime;
+    }
+
+    public Boolean isCrossValidated() {
+        return isCrossValidated;
+    }
+
+    public void setCrossValidated(Boolean crossValidated) {
+        isCrossValidated = crossValidated;
     }
 }
