@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ParamsEntityService {
+public class ModelParamsEntityService {
     @Autowired
     private IModelParamsRepository modelParamsRepository;
 
-    @Autowired
-    private IOptimizerParamsRepository optimizerParamsRepository;
 }
