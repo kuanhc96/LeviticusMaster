@@ -88,7 +88,7 @@ public class PredictTaskEntity {
         this.trainId = trainId;
     }
 
-    public Boolean getComplete() {
+    public Boolean isComplete() {
         return isComplete;
     }
 
