@@ -57,11 +57,11 @@ public class PredictTaskEntityService extends BaseService<PredictTaskEntity> {
 
     }
 
-    public PredictTaskEntity updatePredictTime(Long id, Double predictTime) {
+    public PredictTaskEntity updatePredictTime(Long id, Double elapsedTime) {
         Optional<PredictTaskEntity> optionalPredictTaskEntity = predictTaskRepository.findById(id);
         if (optionalPredictTaskEntity.isPresent()) {
             PredictTaskEntity taskEntity = optionalPredictTaskEntity.get();
-            taskEntity.setPredictTime(predictTime);
+            taskEntity.setTimeElapsed(elapsedTime);
             return predictTaskRepository.save(taskEntity);
         } else {
             throw new ResourceNotFoundException("Predict Task With ID=" + id + " Not Found");

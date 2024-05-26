@@ -1,7 +1,7 @@
 package leviticus.master.service;
 
 import jakarta.transaction.Transactional;
-import leviticus.master.entity.AbstractBaseEntity;
+import leviticus.master.entity.AbstractEntity;
 import leviticus.master.exception.ResourceNotFoundException;
 import leviticus.master.repository.IBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 
 @Service
-public abstract class BaseService<T extends AbstractBaseEntity> {
+public abstract class BaseService<T extends AbstractEntity> {
 
     @Autowired
     private IBaseRepository<T, Long> baseRepository;
