@@ -11,14 +11,14 @@
     <form action="#" th:action="@{/jobs/submitSelection}" th:object="${trainRequestFormModel}" method="post">
         <div>
             <h2>Choose Classification Model Type</h2>
-            <input type="radio" id="LBP" name="modelType" value="LocalBinaryPattern" th:field="*{modelType}"/>
+            <input type="radio" id="LBP" name="modelType" value="LBP" th:field="*{modelType}"/>
             <label for="LBP">Local Binary Pattern</label><br>
-            <input type="radio" id="miniVGG" name="modelType" value="MiniVGG" th:field="*{modelType}"/>
+            <input type="radio" id="miniVGG" name="modelType" value="MINI_VGG" th:field="*{modelType}"/>
             <label for="miniVGG">MiniVGG</label>
         </div>
         <div>
             <h2>Choose Optimizer Type</h2>
-            <input type="radio" id="SGD" name="optimizerType" value="Stochastic Gradient Descent" th:field="*{optimizerType}"/>
+            <input type="radio" id="SGD" name="optimizerType" value="SGD" th:field="*{optimizerType}"/>
             <label for="SGD">Stochastic Gradient Descent</label><br>
         </div>
         <div>
