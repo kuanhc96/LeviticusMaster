@@ -105,7 +105,7 @@ public class TaskAssignmentController {
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:" + router.get(modelType) + "/train"))
+                .uri(URI.create("http://api:" + router.get(modelType) + "/train"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonData))
                 .build();
