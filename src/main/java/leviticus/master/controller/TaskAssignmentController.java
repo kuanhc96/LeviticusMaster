@@ -105,7 +105,7 @@ public class TaskAssignmentController {
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create("http://api:" + router.get(modelType) + "/train"))
+                .uri(URI.create("http://fastapi_lbp:" + router.get(modelType) + "/train"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonData))
                 .build();
@@ -114,9 +114,7 @@ public class TaskAssignmentController {
             HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             System.out.println("Response Code: " + response.statusCode());
             System.out.println("Response Body: " + response.body());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
         LOG.info("API request done");
