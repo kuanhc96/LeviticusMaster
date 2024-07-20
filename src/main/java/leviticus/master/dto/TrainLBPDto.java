@@ -41,17 +41,4 @@ public class TrainLBPDto extends TrainDto {
         C = c;
     }
 
-    @Override
-    public String toString() {
-        String jsonData = "" +
-                "{" +
-                "\"taskId\":" + taskId + "," +
-                "\"trainOnly\":\"" + trainOnly + "\"," +
-                "\"dataset\":\"" + dataset + "\"," +
-                "\"numPoints\":" + numPoints + "," +
-                "\"radius\":" + radius + "," +
-                "\"C\":" + C +
-                "}";
-        return jsonData;
-    }
 }

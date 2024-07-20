@@ -9,6 +9,5 @@ public class TrainMiniVGGDto extends TrainDto {
 
     public TrainMiniVGGDto(Long taskId, Boolean trainOnly, String dataset) {
         super(taskId, trainOnly, dataset);
-
     }
 }

@@ -1,5 +1,8 @@
 package leviticus.master.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class TrainDto {
     private Long taskId;
     private Boolean trainOnly;
@@ -36,5 +39,17 @@ public class TrainDto {
 
     public void setDataset(String dataset) {
         this.dataset = dataset;
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "";
+        }
+
     }
 }
