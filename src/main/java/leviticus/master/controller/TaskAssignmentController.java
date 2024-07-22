@@ -1,6 +1,8 @@
 package leviticus.master.controller;
 
+import leviticus.master.dto.TrainDto;
 import leviticus.master.dto.TrainLBPDto;
+import leviticus.master.dto.TrainMiniVGGDto;
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
 import leviticus.master.enums.OptimizerType;
@@ -70,20 +72,38 @@ public class TaskAssignmentController {
         TrainTaskEntity savedEntity = trainService.save(trainEntity);
         Long trainId = savedEntity.getId();
 
-        TrainLBPDto trainLBPDto = new TrainLBPDto(
-                trainId,
-                isTrainOnly,
-                dataset,
-                24,
-                8,
-                89.0
-        );
-        String baseUrl = "http://fastapi-" + modelType + ":" + router.get(modelType);
+        TrainDto trainDto;
+
+        if (modelType.equals(ClassificationModelType.LBP)) {
+            trainDto = new TrainLBPDto(
+                    trainId,
+                    isTrainOnly,
+                    dataset,
+                    24,
+                    8,
+                    89.0
+            );
+        } else if (modelType.equals(ClassificationModelType.MINIVGG)) {
+            trainDto = new TrainMiniVGGDto(
+                    trainId,
+                    isTrainOnly,
+                    dataset
+            );
+
+        } else {
+            LOG.warn(modelType + " model type not available; using default modelType");
+            trainDto = new TrainDto(
+                    trainId,
+                    isTrainOnly,
+                    dataset
+            );
+        }
+        String baseUrl = "http://fastapi-" + modelType.toString().toLowerCase() + ":" + router.get(modelType);
         String endpoint = "/train";
         WebClient webClient = webClientBuilder.baseUrl(baseUrl).build();
         Mono<String> trainResponse = webClient.post()
                 .uri(endpoint)
-                .body(Mono.just(trainLBPDto), TrainLBPDto.class)
+                .body(Mono.just(trainDto), trainDto.getClass())
                 .retrieve()
                 .bodyToMono(String.class);
 
