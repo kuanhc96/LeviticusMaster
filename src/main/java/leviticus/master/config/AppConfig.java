@@ -19,7 +19,7 @@ public class AppConfig {
     public Map<ClassificationModelType, Integer> getRouter() {
         Map<ClassificationModelType, Integer> router = new HashMap<>();
         router.put(ClassificationModelType.LBP, 8000);
-        router.put(ClassificationModelType.MINI_VGG, 8001);
+        router.put(ClassificationModelType.MINIVGG, 8001);
         return router;
     }
 

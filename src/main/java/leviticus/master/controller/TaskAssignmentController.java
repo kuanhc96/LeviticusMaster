@@ -83,7 +83,7 @@ public class TaskAssignmentController {
                     8,
                     89.0
             );
-        } else if (modelType.equals(ClassificationModelType.MINI_VGG)) {
+        } else if (modelType.equals(ClassificationModelType.MINIVGG)) {
             trainDto = new TrainMiniVGGDto(
                     trainId,
                     isTrainOnly,
