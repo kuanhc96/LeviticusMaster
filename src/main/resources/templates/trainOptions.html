@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Choose Algorithm For Training</title>
 </head>
 <body>
-$END$
+
+<div align="center">
+    <h1>Algorithms:</h1>
+    <a href="/templates/train/lbp">Click Here To Create A Training Request With the LBP Algorithm</a><br>
+    <a href="/templates/train/minivgg">Click Here To Create A Training Request With the MiniVGG Algorithm</a>
+</div>
+
+<button onclick="window.location.href='/templates'">Back</button>
 </body>
 </html>
