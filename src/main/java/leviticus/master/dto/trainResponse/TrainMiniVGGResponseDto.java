@@ -1,4 +1,4 @@
 package leviticus.master.dto.trainResponse;
 
-public class TrainMiniVGGResponseDto {
+public class TrainMiniVGGResponseDto extends TrainResponseDto {
 }

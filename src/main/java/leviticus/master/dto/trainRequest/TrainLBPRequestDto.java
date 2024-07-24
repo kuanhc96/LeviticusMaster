@@ -1,6 +1,6 @@
-package leviticus.master.dto;
+package leviticus.master.dto.trainRequest;
 
-public class TrainLBPDto extends TrainDto {
+public class TrainLBPRequestDto extends TrainRequestDto {
     private Long taskId;
     private Boolean trainOnly;
     private String dataset;
@@ -8,9 +8,9 @@ public class TrainLBPDto extends TrainDto {
     private Integer radius;
     private Double C;
 
-    public TrainLBPDto() {}
+    public TrainLBPRequestDto() {}
 
-    public TrainLBPDto(Long taskId, Boolean trainOnly, String dataset, Integer numPoints, Integer radius, Double c) {
+    public TrainLBPRequestDto(Long taskId, Boolean trainOnly, String dataset, Integer numPoints, Integer radius, Double c) {
         super(taskId, trainOnly, dataset);
         this.numPoints = numPoints;
         this.radius = radius;

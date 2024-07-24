@@ -1,16 +1,16 @@
-package leviticus.master.dto;
+package leviticus.master.dto.trainRequest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class TrainDto {
+public class TrainRequestDto {
     private Long taskId;
     private Boolean trainOnly;
     private String dataset;
 
-    public TrainDto() {}
+    public TrainRequestDto() {}
 
-    public TrainDto(Long taskId, Boolean trainOnly, String dataset) {
+    public TrainRequestDto(Long taskId, Boolean trainOnly, String dataset) {
         this.taskId = taskId;
         this.trainOnly = trainOnly;
         this.dataset = dataset;
