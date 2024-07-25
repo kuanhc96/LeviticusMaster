@@ -1,7 +1,7 @@
 package leviticus.master.app.dto;
 
-import leviticus.master.dto.TrainDto;
-import leviticus.master.dto.TrainLBPDto;
+import leviticus.master.dto.trainRequest.TrainRequestDto;
+import leviticus.master.dto.trainRequest.TrainLBPRequestDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,18 +17,18 @@ public class DtoTest {
 
     @Test
     public void testDto() {
-        TrainDto trainDto = new TrainDto();
-        trainDto.setDataset("fakeDataset");
-        trainDto.setTaskId(1L);
-        trainDto.setTrainOnly(true);
-        assertNotNull(trainDto.toString());
-        LOG.info(trainDto.toString());
+        TrainRequestDto trainRequestDto = new TrainRequestDto();
+        trainRequestDto.setDataset("fakeDataset");
+        trainRequestDto.setTaskId(1L);
+        trainRequestDto.setTrainOnly(true);
+        assertNotNull(trainRequestDto.toString());
+        LOG.info(trainRequestDto.toString());
 
-        TrainLBPDto trainLBPDto = new TrainLBPDto();
+        TrainLBPRequestDto trainLBPDto = new TrainLBPRequestDto();
         trainLBPDto.setTrainOnly(true);
         trainLBPDto.setTaskId(2L);
         trainLBPDto.setDataset("fakeLBPDataset");
-        trainLBPDto.setC(89.0);
+        trainLBPDto.setcValue(89.0);
         trainLBPDto.setNumPoints(8);
         trainLBPDto.setRadius(24);
         assertNotNull(trainLBPDto.toString());
