@@ -1,20 +1,19 @@
 package leviticus.master.dto.trainRequest;
 
 public class TrainLBPRequestDto extends TrainRequestDto {
-    private Long taskId;
-    private Boolean trainOnly;
-    private String dataset;
     private Integer numPoints;
     private Integer radius;
-    private Double C;
+    private Double cValue;
 
-    public TrainLBPRequestDto() {}
+    public TrainLBPRequestDto() {
+        super();
+    }
 
-    public TrainLBPRequestDto(Long taskId, Boolean trainOnly, String dataset, Integer numPoints, Integer radius, Double c) {
+    public TrainLBPRequestDto(Long taskId, Boolean trainOnly, String dataset, Integer numPoints, Integer radius, Double cValue) {
         super(taskId, trainOnly, dataset);
         this.numPoints = numPoints;
         this.radius = radius;
-        C = c;
+        this.cValue = cValue;
     }
 
     public Integer getNumPoints() {
@@ -33,12 +32,12 @@ public class TrainLBPRequestDto extends TrainRequestDto {
         this.radius = radius;
     }
 
-    public Double getC() {
-        return C;
+    public Double getcValue() {
+        return cValue;
     }
 
-    public void setC(Double c) {
-        C = c;
+    public void setcValue(Double cValue) {
+        this.cValue = cValue;
     }
 
 }

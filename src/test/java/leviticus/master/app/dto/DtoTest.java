@@ -28,7 +28,7 @@ public class DtoTest {
         trainLBPDto.setTrainOnly(true);
         trainLBPDto.setTaskId(2L);
         trainLBPDto.setDataset("fakeLBPDataset");
-        trainLBPDto.setC(89.0);
+        trainLBPDto.setcValue(89.0);
         trainLBPDto.setNumPoints(8);
         trainLBPDto.setRadius(24);
         assertNotNull(trainLBPDto.toString());
