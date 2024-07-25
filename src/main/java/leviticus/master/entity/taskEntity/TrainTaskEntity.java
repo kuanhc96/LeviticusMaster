@@ -16,10 +16,6 @@ public class TrainTaskEntity extends AbstractTaskEntity {
 
     private String weightsFile;
 
-    private String dataset;
-
-    private Boolean isComplete;
-
     private Boolean isCrossValidated;
 
     private Boolean isTrainOnly;
@@ -48,8 +44,6 @@ public class TrainTaskEntity extends AbstractTaskEntity {
         this.modelType = modelType;
         this.optimizerType = optimizerType;
         this.weightsFile = weightsFile;
-        this.dataset = dataset;
-        this.isComplete = isComplete;
         this.isCrossValidated = isCrossValidated;
         this.isTrainOnly = isTrainOnly;
     }
@@ -71,8 +65,6 @@ public class TrainTaskEntity extends AbstractTaskEntity {
         this.modelType = modelType;
         this.optimizerType = optimizerType;
         this.weightsFile = weightsFile;
-        this.dataset = dataset;
-        this.isComplete = isComplete;
         this.isCrossValidated = isCrossValidated;
         this.isTrainOnly = isTrainOnly;
     }
@@ -91,22 +83,6 @@ public class TrainTaskEntity extends AbstractTaskEntity {
 
     public void setWeightsFile(String weightsFile) {
         this.weightsFile = weightsFile;
-    }
-
-    public String getDataset() {
-        return dataset;
-    }
-
-    public void setDataset(String dataset) {
-        this.dataset = dataset;
-    }
-
-    public Boolean isComplete() {
-        return isComplete;
-    }
-
-    public void setComplete(Boolean complete) {
-        isComplete = complete;
     }
 
     public Boolean isTrainOnly() {
