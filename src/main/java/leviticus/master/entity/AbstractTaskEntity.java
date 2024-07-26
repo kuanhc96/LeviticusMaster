@@ -1,5 +1,6 @@
 package leviticus.master.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import java.sql.Timestamp;
 
@@ -8,6 +9,7 @@ public abstract class AbstractTaskEntity extends AbstractEntity {
 
     private Double accuracy;
 
+    @Column(length=1024)
     private String classificationReport;
 
     private Double timeElapsed;
