@@ -1,7 +1,7 @@
 package leviticus.master.dto.trainResponse;
 
 public class TrainLBPResponseDto extends TrainResponseDto {
-    private Double C;
+    private Double cValue;
     private Integer numPoints;
     private Integer radius;
 
@@ -9,19 +9,19 @@ public class TrainLBPResponseDto extends TrainResponseDto {
         super();
     }
 
-    public TrainLBPResponseDto(Long taskId, String modelPath, Double accuracy, String classificationReport, Double C, Integer numPoints, Integer radius) {
+    public TrainLBPResponseDto(Long taskId, String modelPath, Double accuracy, String classificationReport, Double cValue, Integer numPoints, Integer radius) {
         super(taskId, modelPath, accuracy, classificationReport);
-        this.C = C;
+        this.cValue = cValue;
         this.numPoints = numPoints;
         this.radius = radius;
     }
 
-    public Double getC() {
-        return C;
+    public Double getcValue() {
+        return cValue;
     }
 
-    public void setC(Double c) {
-        C = c;
+    public void setcValue(Double cValue) {
+        this.cValue = cValue;
     }
 
     public Integer getNumPoints() {

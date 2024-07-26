@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>lchgTime</th>
+        <th>accuracy</th>
+        <th>timeElapsed</th>
+        <th>isComplete</th>
+        <th>dataset</th>
+        <th>modelType</th>
+        <th>optimizerType</th>
+        <th>weightsFile</th>
+        <th>isCrossValidated</th>
+        <th>isTrainOnly</th>
+        <th>classificationReport</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="trainTaskEntity : ${trainTaskEntities}" >
+        <td th:text="${trainTaskEntity.id}"></td>
+        <td th:text="${trainTaskEntity.lchgTime}"></td>
+        <td th:text="${trainTaskEntity.accuracy}"></td>
+        <td th:text="${trainTaskEntity.timeElapsed}"></td>
+        <td th:text="${trainTaskEntity.isComplete}"></td>
+        <td th:text="${trainTaskEntity.dataset}"></td>
+        <td th:text="${trainTaskEntity.modelType}"></td>
+        <td th:text="${trainTaskEntity.optimizerType}"></td>
+        <td th:text="${trainTaskEntity.weightsFile}"></td>
+        <td th:text="${trainTaskEntity.isCrossValidated}"></td>
+        <td th:text="${trainTaskEntity.isTrainOnly}"></td>
+        <td th:text="${trainTaskEntity.classificationReport}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<button onclick="window.location.href='/templates'">Back</button>
+
+</body>
+</html>

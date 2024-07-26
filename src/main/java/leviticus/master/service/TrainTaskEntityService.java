@@ -24,6 +24,10 @@ public class TrainTaskEntityService extends BaseService<TrainTaskEntity> {
 
     }
 
+    public Iterable<TrainTaskEntity> findAll() {
+        return trainTaskRepository.findAll();
+    }
+
     public TrainTaskEntity updateWeightsFile(Long id, String weightsFile) {
         Optional<TrainTaskEntity> optionalTrainTaskEntity = trainTaskRepository.findById(id);
         if (optionalTrainTaskEntity.isPresent()) {
