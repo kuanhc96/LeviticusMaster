@@ -114,6 +114,7 @@ public class TaskAssignmentController {
                     updatedEntity.setClassificationReport(trainResponse.getClassificationReport());
                     updatedEntity.setTimeElapsed(watch.getTotalTimeSeconds());
                     updatedEntity.setLchgTime(new Timestamp(date.getTime()));
+                    trainService.save(updatedEntity);
                 });
 
 
@@ -170,12 +171,14 @@ public class TaskAssignmentController {
                 .bodyToMono(trainResponseDtoClass)
                 .subscribe(trainResponse -> {
                     watch.stop();
+                    LOG.info("API Response received");
                     TrainTaskEntity updatedEntity = trainService.getTrainTaskEntityById(trainId);
                     updatedEntity.setWeightsFile(trainResponse.getModelPath());
                     updatedEntity.setAccuracy(trainResponse.getAccuracy());
                     updatedEntity.setClassificationReport(trainResponse.getClassificationReport());
                     updatedEntity.setTimeElapsed(watch.getTotalTimeSeconds());
                     updatedEntity.setLchgTime(new Timestamp(date.getTime()));
+                    trainService.save(updatedEntity);
                 });
 
 
