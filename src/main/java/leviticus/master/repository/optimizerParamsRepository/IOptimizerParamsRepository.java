@@ -1,4 +1,4 @@
-package leviticus.master.repository;
+package leviticus.master.repository.optimizerParamsRepository;
 
 import leviticus.master.entity.AbstractOptimizerParamsEntity;
 import org.springframework.data.repository.CrudRepository;
