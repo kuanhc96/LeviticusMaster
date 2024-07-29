@@ -1,4 +1,4 @@
-package leviticus.master.service;
+package leviticus.master.service.modelParamsService;
 
 import leviticus.master.entity.modelParamsEntity.LBPModelParamsEntity;
 import leviticus.master.repository.modelParamsRepository.ILBPModelParamsRepository;
