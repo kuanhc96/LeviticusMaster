@@ -1,4 +1,4 @@
-package leviticus.master.repository;
+package leviticus.master.repository.taskRepository;
 
 import leviticus.master.entity.taskEntity.PredictTaskEntity;
 

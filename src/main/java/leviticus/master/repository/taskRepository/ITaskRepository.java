@@ -1,4 +1,4 @@
-package leviticus.master.repository;
+package leviticus.master.repository.taskRepository;
 
 import leviticus.master.entity.AbstractTaskEntity;
 import org.springframework.data.repository.CrudRepository;
