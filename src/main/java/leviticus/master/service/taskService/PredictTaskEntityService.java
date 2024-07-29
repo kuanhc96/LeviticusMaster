@@ -1,4 +1,4 @@
-package leviticus.master.service;
+package leviticus.master.service.taskService;
 
 import leviticus.master.entity.taskEntity.PredictTaskEntity;
 import leviticus.master.exception.ResourceNotFoundException;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class PredictTaskEntityService extends BaseService<PredictTaskEntity> {
+public class PredictTaskEntityService extends TaskService<PredictTaskEntity> {
     @Autowired
     private IPredictTaskRepository predictTaskRepository;
     public PredictTaskEntity save(PredictTaskEntity trainTask) {

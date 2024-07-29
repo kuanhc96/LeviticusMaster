@@ -1,4 +1,4 @@
-package leviticus.master.service;
+package leviticus.master.service.taskService;
 
 import jakarta.transaction.Transactional;
 import leviticus.master.entity.AbstractTaskEntity;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 
 @Service
-public abstract class BaseService<T extends AbstractTaskEntity> {
+public abstract class TaskService<T extends AbstractTaskEntity> {
 
     @Autowired
     private ITaskRepository<T, Long> baseRepository;
