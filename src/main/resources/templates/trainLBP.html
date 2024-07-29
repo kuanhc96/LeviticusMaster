@@ -10,11 +10,6 @@
 </div>
 <form action="#" th:action="@{/jobs/submitSelectionLBP}" th:object="${trainLBPRequestFormModel}" method="post">
     <div>
-        <h2>Choose Optimizer Type</h2>
-        <input type="radio" id="SGD" name="optimizerType" value="SGD" th:field="*{optimizerType}"/>
-        <label for="SGD">Stochastic Gradient Descent</label><br>
-    </div>
-    <div>
         <h2>Input Dataset Path</h2>
         <label>Path:</label>
         <input type="text" th:field="*{dataset}"/>
@@ -23,11 +18,6 @@
         <h2>Perform Training Only? (No Test Set)</h2>
         <input type="checkbox" id="trainOnly" th:field="*{isTrainOnly}" />
         <label for="trainOnly">Train Only?</label><br/>
-    </div>
-    <div>
-        <h2>Perform Cross Validation Parameter Search?</h2>
-        <input type="checkbox" id="crossValidated" th:field="*{isCrossValidated}" />
-        <label for="crossValidated">Cross Validation Parameter Search?</label><br/>
     </div>
     <div>
         <h2>Radius</h2>
