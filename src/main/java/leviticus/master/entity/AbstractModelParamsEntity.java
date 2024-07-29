@@ -1,29 +1,29 @@
 package leviticus.master.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 import java.sql.Timestamp;
 
 @MappedSuperclass
-public abstract class AbstractModelParamsEntity extends AbstractEntity {
+public abstract class AbstractModelParamsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
+    // foreign key
     private Long trainId;
 
-    public AbstractModelParamsEntity() {
-        super();
-    }
+    private Timestamp lchgTime;
 
-    public AbstractModelParamsEntity(Timestamp lchgTime) {
-        super(lchgTime);
+    public AbstractModelParamsEntity() {
+        this.lchgTime = new Timestamp(System.currentTimeMillis());
     }
 
     public AbstractModelParamsEntity(Long trainId) {
-        super();
-        this.trainId = trainId;
-    }
-
-    public AbstractModelParamsEntity(Long trainId, Timestamp lchgTime) {
-        super(lchgTime);
+        this();
         this.trainId = trainId;
     }
 
@@ -33,5 +33,9 @@ public abstract class AbstractModelParamsEntity extends AbstractEntity {
 
     public void setTrainId(Long trainId) {
         this.trainId = trainId;
+    }
+
+    public Timestamp getLchgTime() {
+        return lchgTime;
     }
 }

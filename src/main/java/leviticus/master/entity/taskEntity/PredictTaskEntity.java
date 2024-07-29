@@ -2,8 +2,8 @@ package leviticus.master.entity.taskEntity;
 
 import jakarta.persistence.Entity;
 import leviticus.master.entity.AbstractTaskEntity;
+import leviticus.master.enums.ClassificationModelType;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
@@ -12,52 +12,41 @@ public class PredictTaskEntity extends AbstractTaskEntity {
     // foreign key
     private Long trainId;
 
-    private String results;
+    private String dataset;
+
+    private Double accuracy;
 
     public PredictTaskEntity() {
         super();
     }
 
-    public PredictTaskEntity(Timestamp lchgTime) {
-        super(lchgTime);
+    public PredictTaskEntity(Long trainId) {
+        super();
+        this.trainId = trainId;
+    }
+
+    public PredictTaskEntity(ClassificationModelType modelType) {
+        super(modelType);
+    }
+
+    public PredictTaskEntity(ClassificationModelType modelType, Long trainId) {
+        super(modelType);
+        this.trainId = trainId;
     }
 
     public PredictTaskEntity(
-            Long trainId,
-            String results,
-            Double accuracy,
-            String classificationReport,
-            Double timeElapsed,
+            ClassificationModelType modelType,
+            Timestamp lchgTime,
             Boolean isComplete,
+            Double timeElapsed,
+            Long trainId,
+            Double accuracy,
             String dataset
     ) {
-        super(accuracy, classificationReport, timeElapsed, isComplete, dataset);
+        super(modelType, lchgTime, timeElapsed, isComplete);
         this.trainId = trainId;
-        this.results = results;
-    }
-
-
-    public PredictTaskEntity(
-            Long trainId,
-            Double accuracy,
-            String classificationReport,
-            String results,
-            Boolean isComplete,
-            String dataset,
-            Double timeElapsed,
-            Timestamp lchgTime
-    ) {
-        super(lchgTime, accuracy, classificationReport, timeElapsed, isComplete, dataset);
-        this.trainId = trainId;
-        this.results = results;
-    }
-
-    public String getResults() {
-        return results;
-    }
-
-    public void setResults(String results) {
-        this.results = results;
+        this.dataset = dataset;
+        this.accuracy = accuracy;
     }
 
     public Long getTrainId() {
@@ -68,5 +57,20 @@ public class PredictTaskEntity extends AbstractTaskEntity {
         this.trainId = trainId;
     }
 
+    public String getDataset() {
+        return dataset;
+    }
+
+    public void setDataset(String dataset) {
+        this.dataset = dataset;
+    }
+
+    public Double getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(Double accuracy) {
+        this.accuracy = accuracy;
+    }
 }
 

@@ -16,16 +16,16 @@ public class SGDOptimizerParamsEntity extends AbstractOptimizerParamsEntity {
         super();
     }
 
-    public SGDOptimizerParamsEntity(Timestamp lchgTime) {
-        super(lchgTime);
+    public SGDOptimizerParamsEntity(Long trainId) {
+        super(trainId);
     }
 
     public SGDOptimizerParamsEntity(
+            Long trainId,
             Double learningRate,
             Double momentum,
             Double decayRate,
-            Boolean nesterov,
-            Long trainId
+            Boolean nesterov
 
     ) {
         super(trainId);
@@ -34,23 +34,6 @@ public class SGDOptimizerParamsEntity extends AbstractOptimizerParamsEntity {
         this.decayRate = decayRate;
         this.nesterov = nesterov;
     }
-
-    public SGDOptimizerParamsEntity(
-            Double learningRate,
-            Double momentum,
-            Double decayRate,
-            Boolean nesterov,
-            Long trainId,
-            Timestamp lchgTime
-    ) {
-        super(trainId, lchgTime);
-        this.learningRate = learningRate;
-        this.momentum = momentum;
-        this.decayRate = decayRate;
-        this.nesterov = nesterov;
-    }
-
-
 
     public Double getLearningRate() {
         return learningRate;

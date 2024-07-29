@@ -1,76 +1,60 @@
 package leviticus.master.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
+import leviticus.master.enums.ClassificationModelType;
+
 import java.sql.Timestamp;
 
 @MappedSuperclass
-public abstract class AbstractTaskEntity extends AbstractEntity {
+public abstract class AbstractTaskEntity {
 
-    private Double accuracy;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @Column(length=1024)
-    private String classificationReport;
+    private Timestamp lchgTime;
+
+    private ClassificationModelType modelType;
 
     private Double timeElapsed;
 
     private Boolean isComplete;
 
-    private String dataset;
-
+    // default lchgTime = current time
+    // default isComplete = false
+    // default timeElapsed = 0.0
+    // default model type (DEFAULT is only a placeholder and should be modified later)
     public AbstractTaskEntity() {
-        super();
+        this.modelType = ClassificationModelType.DEFAULT;
+        this.lchgTime = new Timestamp(System.currentTimeMillis());
+        this.timeElapsed = 0.0;
+        this.isComplete = false;
     }
 
-    public AbstractTaskEntity(Timestamp lchgTime) {
-        super(lchgTime);
-    }
-
+    // default lchgTime = current time
+    // default isComplete = false
+    // default timeElapsed = 0.0
+    // model type filled at instantiation
     public AbstractTaskEntity(
-            Double accuracy,
-            String classificationReport,
-            Double timeElapsed,
-            Boolean isComplete,
-            String dataset
+        ClassificationModelType modelType
     ) {
-        super();
-        this.accuracy = accuracy;
-        this.classificationReport = classificationReport;
-        this.timeElapsed = timeElapsed;
-        this.isComplete = isComplete;
-        this.dataset = dataset;
+        this.modelType = modelType;
+        this.lchgTime = new Timestamp(System.currentTimeMillis());
+        this.timeElapsed = 0.0;
+        this.isComplete = false;
     }
 
+    // manually fill in all needed parameters at instantiation
     public AbstractTaskEntity(
+            ClassificationModelType modelType,
             Timestamp lchgTime,
-            Double accuracy,
-            String classificationReport,
             Double timeElapsed,
-            Boolean isComplete,
-            String dataset
+            Boolean isComplete
     ) {
-        super(lchgTime);
-        this.accuracy = accuracy;
-        this.classificationReport = classificationReport;
+        this.modelType = modelType;
+        this.lchgTime = lchgTime;
         this.timeElapsed = timeElapsed;
         this.isComplete = isComplete;
-        this.dataset = dataset;
-    }
-
-    public Double getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(Double accuracy) {
-        this.accuracy = accuracy;
-    }
-
-    public String getClassificationReport() {
-        return classificationReport;
-    }
-
-    public void setClassificationReport(String classificationReport) {
-        this.classificationReport = classificationReport;
     }
 
     public Double getTimeElapsed() {
@@ -89,12 +73,28 @@ public abstract class AbstractTaskEntity extends AbstractEntity {
         isComplete = complete;
     }
 
-    public String getDataset() {
-        return dataset;
+    public Long getId() {
+        return id;
     }
 
-    public void setDataset(String dataset) {
-        this.dataset = dataset;
+    public Timestamp getLchgTime() {
+        return lchgTime;
+    }
+
+    public void setLchgTime(Timestamp lchgTime) {
+        this.lchgTime = lchgTime;
+    }
+
+    public void setLchgTime() {
+        this.lchgTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public ClassificationModelType getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(ClassificationModelType modelType) {
+        this.modelType = modelType;
     }
 }
 

@@ -3,11 +3,9 @@ package leviticus.master.entity.modelParamsEntity;
 import jakarta.persistence.Entity;
 import leviticus.master.entity.AbstractModelParamsEntity;
 
-import java.sql.Timestamp;
-
 @Entity
 public class LBPModelParamsEntity extends AbstractModelParamsEntity {
-    private Double c;
+    private Double cValue;
 
     private Integer numPoints;
 
@@ -17,42 +15,28 @@ public class LBPModelParamsEntity extends AbstractModelParamsEntity {
         super();
     }
 
-    public LBPModelParamsEntity(Timestamp lchgTime) {
-        super(lchgTime);
+    public LBPModelParamsEntity(Long trainId) {
+        super(trainId);
     }
 
     public LBPModelParamsEntity(
-            Double c,
+            Long trainId,
+            Double cValue,
             Integer numPoints,
-            Integer radius,
-            Long trainId
+            Integer radius
     ) {
         super(trainId);
-        this.c = c;
-        this.numPoints = numPoints;
-        this.radius = radius;
-
-    }
-
-    public LBPModelParamsEntity(
-            Double c,
-            Integer numPoints,
-            Integer radius,
-            Long trainId,
-            Timestamp lchgTime
-    ) {
-        super(trainId, lchgTime);
-        this.c = c;
+        this.cValue = cValue;
         this.numPoints = numPoints;
         this.radius = radius;
     }
 
-    public Double getC() {
-        return c;
+    public Double getcValue() {
+        return cValue;
     }
 
-    public void setC(Double c) {
-        this.c = c;
+    public void setcValue(Double cValue) {
+        this.cValue = cValue;
     }
 
     public Integer getNumPoints() {
