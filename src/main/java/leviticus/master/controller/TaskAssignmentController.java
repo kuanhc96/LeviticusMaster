@@ -135,6 +135,11 @@ public class TaskAssignmentController {
         Long trainId = savedEntity.getId();
 
         CNNModelParamsEntity paramsEntity = new CNNModelParamsEntity(trainId);
+        paramsEntity.setBatchSize(32);
+        paramsEntity.setEpochs(2);
+        paramsEntity.setNumClasses(3);
+        paramsEntity.setResizedX(128);
+        paramsEntity.setResizedY(128);
         cnnModelParamsService.save(paramsEntity);
 
         TrainMiniVGGRequestDto trainRequestDto = new TrainMiniVGGRequestDto(
