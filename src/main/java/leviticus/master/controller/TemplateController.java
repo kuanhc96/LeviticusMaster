@@ -3,6 +3,7 @@ package leviticus.master.controller;
 import leviticus.master.entity.modelParamsEntity.CNNModelParamsEntity;
 import leviticus.master.entity.modelParamsEntity.LBPModelParamsEntity;
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
+import leviticus.master.model.predict.PredictRequestFormModel;
 import leviticus.master.model.train.TrainLBPRequestFormModel;
 import leviticus.master.model.train.TrainMiniVGGRequestFormModel;
 import leviticus.master.service.modelParamsService.CNNModelParamsEntityService;
@@ -56,6 +57,17 @@ public class TemplateController {
     @GetMapping(value = "/train")
     public String getTrainOptions(Model model) {
         return "trainOptions";
+    }
+
+    @GetMapping(value = "/predict")
+    public String getPredictOptions(Model model) {
+        Iterable<TrainTaskEntity> trainTaskEntities = trainTaskEntityService.findAll();
+        List<TrainTaskEntity> trainTaskEntityList = new ArrayList<>();
+        trainTaskEntities.forEach(p -> trainTaskEntityList.add(p));
+        model.addAttribute("trainTaskEntities", trainTaskEntityList);
+
+        model.addAttribute("predictRequestFormModel", new PredictRequestFormModel());
+        return "predictOptions";
     }
 
     @GetMapping(value = "/train/lbp")
