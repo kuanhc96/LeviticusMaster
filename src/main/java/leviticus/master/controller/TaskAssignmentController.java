@@ -168,6 +168,7 @@ public class TaskAssignmentController {
                     watch.stop();
                     LOG.info("API Response received");
                     TrainTaskEntity updatedEntity = trainService.getTrainTaskEntityById(trainId);
+                    updatedEntity.setComplete(true);
                     updatedEntity.setWeightsFile(trainResponse.getModelPath());
                     updatedEntity.setAccuracy(trainResponse.getAccuracy());
                     updatedEntity.setClassificationReport(trainResponse.getClassificationReport());
