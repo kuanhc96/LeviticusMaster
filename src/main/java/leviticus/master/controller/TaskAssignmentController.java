@@ -9,6 +9,7 @@ import leviticus.master.entity.modelParamsEntity.LBPModelParamsEntity;
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
 import leviticus.master.enums.OptimizerType;
+import leviticus.master.model.predict.PredictRequestFormModel;
 import leviticus.master.model.train.TrainLBPRequestFormModel;
 import leviticus.master.model.train.TrainMiniVGGRequestFormModel;
 import leviticus.master.service.modelParamsService.CNNModelParamsEntityService;
@@ -56,6 +57,14 @@ public class TaskAssignmentController {
 
     @Autowired
     private Map<ClassificationModelType, Integer> router;
+
+    @PostMapping(value = "/predict")
+    public String predict(PredictRequestFormModel predictRequestFormModel, Model model) {
+        LOG.info("entered into predict API");
+        LOG.info("trainId:" + predictRequestFormModel.getTrainId());
+        LOG.info("dataset:" + predictRequestFormModel.getDataset());
+        return "redirect:/templates";
+    }
 
     @PostMapping(value = "/trainLBP")
     public String submitForm(TrainLBPRequestFormModel trainRequestFormModel, Model model) {
