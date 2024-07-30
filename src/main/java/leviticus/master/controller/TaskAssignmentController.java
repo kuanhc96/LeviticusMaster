@@ -8,6 +8,7 @@ import leviticus.master.entity.modelParamsEntity.CNNModelParamsEntity;
 import leviticus.master.entity.modelParamsEntity.LBPModelParamsEntity;
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
+import leviticus.master.enums.OptimizerType;
 import leviticus.master.model.TrainLBPRequestFormModel;
 import leviticus.master.model.TrainMiniVGGRequestFormModel;
 import leviticus.master.service.modelParamsService.CNNModelParamsEntityService;
@@ -126,10 +127,12 @@ public class TaskAssignmentController {
         ClassificationModelType modelType = trainRequestFormModel.getModelType();
         String dataset = trainRequestFormModel.getDataset();
         Boolean isTrainOnly = trainRequestFormModel.getIsTrainOnly();
+        OptimizerType optimizerType = trainRequestFormModel.getOptimizerType();
 
         TrainTaskEntity trainEntity = new TrainTaskEntity(modelType);
         trainEntity.setDataset(dataset);
         trainEntity.setTrainOnly(isTrainOnly);
+        trainEntity.setOptimizerType(optimizerType);
 
         TrainTaskEntity savedEntity = trainService.save(trainEntity);
         Long trainId = savedEntity.getId();
