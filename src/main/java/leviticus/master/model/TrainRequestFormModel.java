@@ -1,30 +1,27 @@
 package leviticus.master.model;
 
 import leviticus.master.enums.ClassificationModelType;
-import leviticus.master.enums.OptimizerType;
 
 public class TrainRequestFormModel {
     private ClassificationModelType modelType;
-    private OptimizerType optimizerType;
     private String dataset;
     private Boolean isTrainOnly;
-    private Boolean isCrossValidated;
 
-    public TrainRequestFormModel() {}
+    public TrainRequestFormModel() {
+    }
+
+    public TrainRequestFormModel(ClassificationModelType modelType) {
+        this.modelType = modelType;
+    }
 
     public TrainRequestFormModel(
             ClassificationModelType modelType,
-            OptimizerType optimizerType,
             String dataset,
-            Boolean isTrainOnly,
-            Boolean isCrossValidated
+            Boolean isTrainOnly
     ) {
         this.modelType = modelType;
-        this.optimizerType = optimizerType;
         this.dataset = dataset;
         this.isTrainOnly = isTrainOnly;
-        this.isCrossValidated = isCrossValidated;
-
     }
 
     public ClassificationModelType getModelType() {
@@ -33,14 +30,6 @@ public class TrainRequestFormModel {
 
     public void setModelType(ClassificationModelType modelType) {
         this.modelType = modelType;
-    }
-
-    public OptimizerType getOptimizerType() {
-        return optimizerType;
-    }
-
-    public void setOptimizerType(OptimizerType optimizerType) {
-        this.optimizerType = optimizerType;
     }
 
     public String getDataset() {
@@ -58,12 +47,5 @@ public class TrainRequestFormModel {
     public void setIsTrainOnly(Boolean trainOnly) {
         isTrainOnly = trainOnly;
     }
-
-    public Boolean getIsCrossValidated() {
-        return isCrossValidated;
-    }
-
-    public void setIsCrossValidated(Boolean crossValidated) {
-        isCrossValidated = crossValidated;
-    }
 }
+

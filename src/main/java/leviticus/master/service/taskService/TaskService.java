@@ -1,19 +1,19 @@
-package leviticus.master.service;
+package leviticus.master.service.taskService;
 
 import jakarta.transaction.Transactional;
-import leviticus.master.entity.AbstractEntity;
+import leviticus.master.entity.AbstractTaskEntity;
 import leviticus.master.exception.ResourceNotFoundException;
-import leviticus.master.repository.IBaseRepository;
+import leviticus.master.repository.taskRepository.ITaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 
 @Service
-public abstract class BaseService<T extends AbstractEntity> {
+public abstract class TaskService<T extends AbstractTaskEntity> {
 
     @Autowired
-    private IBaseRepository<T, Long> baseRepository;
+    private ITaskRepository<T, Long> baseRepository;
 
     @Transactional
     public T updateLchgTime(Long id) {

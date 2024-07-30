@@ -1,9 +1,13 @@
 package leviticus.master.controller;
 
+import leviticus.master.entity.modelParamsEntity.CNNModelParamsEntity;
+import leviticus.master.entity.modelParamsEntity.LBPModelParamsEntity;
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
 import leviticus.master.model.TrainLBPRequestFormModel;
 import leviticus.master.model.TrainMiniVGGRequestFormModel;
-import leviticus.master.service.TrainTaskEntityService;
+import leviticus.master.service.modelParamsService.CNNModelParamsEntityService;
+import leviticus.master.service.modelParamsService.LBPModelParamsEntityService;
+import leviticus.master.service.taskService.TrainTaskEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +23,12 @@ public class TemplateController {
     @Autowired
     private TrainTaskEntityService trainTaskEntityService;
 
+    @Autowired
+    private LBPModelParamsEntityService lbpModelParamsEntityService;
+
+    @Autowired
+    private CNNModelParamsEntityService cnnModelParamsEntityService;
+
     @GetMapping
     public String getJobs(Model model) {
         return "landing";
@@ -30,6 +40,16 @@ public class TemplateController {
         List<TrainTaskEntity> trainTaskEntityList = new ArrayList<>();
         trainTaskEntities.forEach(p -> trainTaskEntityList.add(p));
         model.addAttribute("trainTaskEntities", trainTaskEntityList);
+
+        Iterable<LBPModelParamsEntity> lbpModelParamsEntityIterable = lbpModelParamsEntityService.findAll();
+        List<LBPModelParamsEntity> lbpModelParamsEntityList = new ArrayList<>();
+        lbpModelParamsEntityIterable.forEach(p -> lbpModelParamsEntityList.add(p));
+        model.addAttribute("lbpModelParamsEntities", lbpModelParamsEntityList);
+
+        Iterable<CNNModelParamsEntity> cnnModelParamsEntityIterable = cnnModelParamsEntityService.findAll();
+        List<CNNModelParamsEntity> cnnModelParamsEntityList = new ArrayList<>();
+        cnnModelParamsEntityIterable.forEach(p -> cnnModelParamsEntityList.add(p));
+        model.addAttribute("cnnModelParamsEntities", cnnModelParamsEntityList);
         return "results";
     }
 

@@ -1,36 +1,41 @@
 package leviticus.master.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @MappedSuperclass
-public abstract class AbstractOptimizerParamsEntity extends AbstractEntity {
+public abstract class AbstractOptimizerParamsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
+    // foreign key
     private Long trainId;
 
-    public AbstractOptimizerParamsEntity() {
-        super();
-    }
+    private Timestamp lchgTime;
 
-    public AbstractOptimizerParamsEntity(Timestamp lchgTime) {
-        super(lchgTime);
+    public AbstractOptimizerParamsEntity() {
+        lchgTime = new Timestamp(System.currentTimeMillis());
     }
 
     public AbstractOptimizerParamsEntity(Long trainId) {
-        super();
-        this.trainId = trainId;
-    }
-
-    public AbstractOptimizerParamsEntity(Long trainId, Timestamp lchgTime) {
-        super(lchgTime);
+        this();
         this.trainId = trainId;
     }
 
     public Long getTrainId() {
         return trainId;
+    }
+
+    public void setTrainId(Long trainId) {
+        this.trainId = trainId;
+    }
+
+    public Timestamp getLchgTime() {
+        return lchgTime;
     }
 }

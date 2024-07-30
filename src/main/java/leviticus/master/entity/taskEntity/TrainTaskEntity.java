@@ -1,5 +1,6 @@
 package leviticus.master.entity.taskEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import leviticus.master.entity.AbstractTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
@@ -10,72 +11,80 @@ import java.sql.Timestamp;
 @Entity
 public class TrainTaskEntity extends AbstractTaskEntity {
 
-    private ClassificationModelType modelType;
-
     private OptimizerType optimizerType;
 
     private String weightsFile;
 
-    private Boolean isCrossValidated;
-
     private Boolean isTrainOnly;
 
+    private String dataset;
+
+    private Double accuracy;
+
+    @Column(length=1024)
+    private String classificationReport;
+
+    // default: everything
+    // manually fill in needed parameters later with setters
     public TrainTaskEntity() {
         super();
+        optimizerType = OptimizerType.DEFAULT;
     }
 
-    public TrainTaskEntity(Timestamp lchgTime) {
-        super(lchgTime);
+    // default: optimizerType
+    // manually fill in model type at instantiation
+    public TrainTaskEntity(ClassificationModelType modelType) {
+        super(modelType);
+        optimizerType = OptimizerType.DEFAULT;
     }
 
+    // default: lchgTime
+    // default: isComplete
+    // default: timeElapsed
+    // manually fill in all other parameters at instantiation
     public TrainTaskEntity(
             ClassificationModelType modelType,
             OptimizerType optimizerType,
             String weightsFile,
-            Boolean isCrossValidated,
             Boolean isTrainOnly,
-            Double accuracy,
-            String classificationReport,
-            Double timeElapsed,
-            Boolean isComplete,
-            String dataset
-    ) {
-        super(accuracy, classificationReport, timeElapsed, isComplete, dataset);
-        this.modelType = modelType;
-        this.optimizerType = optimizerType;
-        this.weightsFile = weightsFile;
-        this.isCrossValidated = isCrossValidated;
-        this.isTrainOnly = isTrainOnly;
-    }
-
-    public TrainTaskEntity(
-            ClassificationModelType modelType,
-            OptimizerType optimizerType,
-            String weightsFile,
-            Boolean isCrossValidated,
-            Boolean isTrainOnly,
-            Double accuracy,
-            String classificationReport,
-            Double timeElapsed,
-            Boolean isComplete,
             String dataset,
-            Timestamp lchgTime
+            Double accuracy,
+            String classificationReport
     ) {
-        super(lchgTime, accuracy, classificationReport, timeElapsed, isComplete, dataset);
-        this.modelType = modelType;
+        super(modelType);
         this.optimizerType = optimizerType;
         this.weightsFile = weightsFile;
-        this.isCrossValidated = isCrossValidated;
         this.isTrainOnly = isTrainOnly;
+        this.dataset = dataset;
+        this.accuracy = accuracy;
+        this.classificationReport = classificationReport;
     }
 
-    public ClassificationModelType getModelType() {
-        return modelType;
+    // default: lchgTime
+    // default: isComplete
+    // default: timeElapsed
+    // manually fill in all other parameters at instantiation
+    public TrainTaskEntity(
+            ClassificationModelType modelType,
+            Timestamp lchgTime,
+            Boolean isComplete,
+            Double timeElapsed,
+            OptimizerType optimizerType,
+            String weightsFile,
+            Boolean isTrainOnly,
+            String dataset,
+            Double accuracy,
+            String classificationReport
+    ) {
+        super(modelType, lchgTime, timeElapsed, isComplete);
+        this.optimizerType = optimizerType;
+        this.weightsFile = weightsFile;
+        this.isTrainOnly = isTrainOnly;
+        this.dataset = dataset;
+        this.accuracy = accuracy;
+        this.classificationReport = classificationReport;
     }
 
-    public void setModelType(ClassificationModelType modelType) {
-        this.modelType = modelType;
-    }
 
     public String getWeightsFile() {
         return weightsFile;
@@ -94,19 +103,35 @@ public class TrainTaskEntity extends AbstractTaskEntity {
         this.isTrainOnly = isTrainOnly;
     }
 
-    public Boolean isCrossValidated() {
-        return isCrossValidated;
-    }
-
-    public void setCrossValidated(Boolean crossValidated) {
-        isCrossValidated = crossValidated;
-    }
-
     public OptimizerType getOptimizerType() {
         return optimizerType;
     }
 
     public void setOptimizerType(OptimizerType optimizerType) {
         this.optimizerType = optimizerType;
+    }
+
+    public String getDataset() {
+        return dataset;
+    }
+
+    public void setDataset(String dataset) {
+        this.dataset = dataset;
+    }
+
+    public Double getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(Double accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    public String getClassificationReport() {
+        return classificationReport;
+    }
+
+    public void setClassificationReport(String classificationReport) {
+        this.classificationReport = classificationReport;
     }
 }

@@ -1,15 +1,15 @@
-package leviticus.master.service;
+package leviticus.master.service.taskService;
 
 import leviticus.master.entity.taskEntity.PredictTaskEntity;
 import leviticus.master.exception.ResourceNotFoundException;
-import leviticus.master.repository.IPredictTaskRepository;
+import leviticus.master.repository.taskRepository.IPredictTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class PredictTaskEntityService extends BaseService<PredictTaskEntity> {
+public class PredictTaskEntityService extends TaskService<PredictTaskEntity> {
     @Autowired
     private IPredictTaskRepository predictTaskRepository;
     public PredictTaskEntity save(PredictTaskEntity trainTask) {
@@ -62,30 +62,6 @@ public class PredictTaskEntityService extends BaseService<PredictTaskEntity> {
         if (optionalPredictTaskEntity.isPresent()) {
             PredictTaskEntity taskEntity = optionalPredictTaskEntity.get();
             taskEntity.setTimeElapsed(elapsedTime);
-            return predictTaskRepository.save(taskEntity);
-        } else {
-            throw new ResourceNotFoundException("Predict Task With ID=" + id + " Not Found");
-        }
-
-    }
-
-    public PredictTaskEntity updateClassificationReport(Long id, String classificationReport) {
-        Optional<PredictTaskEntity> optionalPredictTaskEntity = predictTaskRepository.findById(id);
-        if (optionalPredictTaskEntity.isPresent()) {
-            PredictTaskEntity taskEntity = optionalPredictTaskEntity.get();
-            taskEntity.setClassificationReport(classificationReport);
-            return predictTaskRepository.save(taskEntity);
-        } else {
-            throw new ResourceNotFoundException("Predict Task With ID=" + id + " Not Found");
-        }
-
-    }
-
-    public PredictTaskEntity updateResults(Long id, String results) {
-        Optional<PredictTaskEntity> optionalPredictTaskEntity = predictTaskRepository.findById(id);
-        if (optionalPredictTaskEntity.isPresent()) {
-            PredictTaskEntity taskEntity = optionalPredictTaskEntity.get();
-            taskEntity.setResults(results);
             return predictTaskRepository.save(taskEntity);
         } else {
             throw new ResourceNotFoundException("Predict Task With ID=" + id + " Not Found");

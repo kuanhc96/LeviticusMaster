@@ -4,15 +4,18 @@ import leviticus.master.dto.trainRequest.TrainLBPRequestDto;
 import leviticus.master.dto.trainRequest.TrainMiniVGGRequestDto;
 import leviticus.master.dto.trainResponse.TrainLBPResponseDto;
 import leviticus.master.dto.trainResponse.TrainMiniVGGResponseDto;
+import leviticus.master.entity.modelParamsEntity.CNNModelParamsEntity;
+import leviticus.master.entity.modelParamsEntity.LBPModelParamsEntity;
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
 import leviticus.master.enums.OptimizerType;
 import leviticus.master.model.TrainLBPRequestFormModel;
 import leviticus.master.model.TrainMiniVGGRequestFormModel;
-import leviticus.master.service.ModelParamsEntityService;
+import leviticus.master.service.modelParamsService.CNNModelParamsEntityService;
+import leviticus.master.service.modelParamsService.LBPModelParamsEntityService;
 import leviticus.master.service.OptimizerParamsEntityService;
-import leviticus.master.service.PredictTaskEntityService;
-import leviticus.master.service.TrainTaskEntityService;
+import leviticus.master.service.taskService.PredictTaskEntityService;
+import leviticus.master.service.taskService.TrainTaskEntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -35,7 +37,10 @@ public class TaskAssignmentController {
     private static final Logger LOG = LoggerFactory.getLogger(TaskAssignmentController.class);
 
     @Autowired
-    private ModelParamsEntityService modelService;
+    private LBPModelParamsEntityService lbpModelParamsService;
+
+    @Autowired
+    private CNNModelParamsEntityService cnnModelParamsService;
 
     @Autowired
     private OptimizerParamsEntityService optimizerService;
@@ -52,36 +57,29 @@ public class TaskAssignmentController {
     @Autowired
     private Map<ClassificationModelType, Integer> router;
 
-    @PostMapping(value = "/submitSelectionLBP")
+    @PostMapping(value = "/trainLBP")
     public String submitForm(TrainLBPRequestFormModel trainRequestFormModel, Model model) {
         LOG.info("entered into submitSelectionLBP API");
         ClassificationModelType modelType = trainRequestFormModel.getModelType();
-        OptimizerType optimizerType = trainRequestFormModel.getOptimizerType();
         String dataset = trainRequestFormModel.getDataset();
         Boolean isTrainOnly = trainRequestFormModel.getIsTrainOnly();
-        Boolean isCrossValidated = trainRequestFormModel.getIsCrossValidated();
         Integer numPoints = trainRequestFormModel.getNumPoints();
         Integer radius = trainRequestFormModel.getRadius();
         Double cValue = trainRequestFormModel.getC();
-        LOG.info("C value is " + cValue);
 
-        Date date = new Date();
-        TrainTaskEntity trainEntity = new TrainTaskEntity(
-                modelType,
-                optimizerType,
-                null,
-                isCrossValidated,
-                isTrainOnly,
-                null,
-                null,
-                0.0,
-                false,
-                dataset,
-                new Timestamp(date.getTime())
-        );
+        TrainTaskEntity trainEntity = new TrainTaskEntity(modelType);
+        trainEntity.setDataset(dataset);
+        trainEntity.setTrainOnly(isTrainOnly);
 
-        TrainTaskEntity savedEntity = trainService.save(trainEntity);
-        Long trainId = savedEntity.getId();
+        TrainTaskEntity savedTaskEntity = trainService.save(trainEntity);
+        Long trainId = savedTaskEntity.getId();
+
+        LBPModelParamsEntity modelEntity = new LBPModelParamsEntity(trainId);
+        modelEntity.setcValue(cValue);
+        modelEntity.setNumPoints(numPoints);
+        modelEntity.setRadius(radius);
+
+        lbpModelParamsService.save(modelEntity);
 
         TrainLBPRequestDto trainLBPRequestDto = new TrainLBPRequestDto(
                 trainId,
@@ -113,7 +111,7 @@ public class TaskAssignmentController {
                     updatedEntity.setAccuracy(trainResponse.getAccuracy());
                     updatedEntity.setClassificationReport(trainResponse.getClassificationReport());
                     updatedEntity.setTimeElapsed(watch.getTotalTimeSeconds());
-                    updatedEntity.setLchgTime(new Timestamp(date.getTime()));
+                    updatedEntity.setLchgTime(new Timestamp(System.currentTimeMillis()));
                     trainService.save(updatedEntity);
                 });
 
@@ -123,32 +121,29 @@ public class TaskAssignmentController {
     }
 
 
-    @PostMapping(value = "/submitSelectionMiniVGG")
+    @PostMapping(value = "/trainMiniVGG")
     public String submitForm(TrainMiniVGGRequestFormModel trainRequestFormModel, Model model) {
         LOG.info("entered into submitSelectionMiniVGG API");
         ClassificationModelType modelType = trainRequestFormModel.getModelType();
-        OptimizerType optimizerType = trainRequestFormModel.getOptimizerType();
         String dataset = trainRequestFormModel.getDataset();
         Boolean isTrainOnly = trainRequestFormModel.getIsTrainOnly();
-        Boolean isCrossValidated = trainRequestFormModel.getIsCrossValidated();
+        OptimizerType optimizerType = trainRequestFormModel.getOptimizerType();
 
-        Date date = new Date();
-        TrainTaskEntity trainEntity = new TrainTaskEntity(
-                modelType,
-                optimizerType,
-                null,
-                isCrossValidated,
-                isTrainOnly,
-                null,
-                null,
-                0.0,
-                false,
-                dataset,
-                new Timestamp(date.getTime())
-            );
+        TrainTaskEntity trainEntity = new TrainTaskEntity(modelType);
+        trainEntity.setDataset(dataset);
+        trainEntity.setTrainOnly(isTrainOnly);
+        trainEntity.setOptimizerType(optimizerType);
 
         TrainTaskEntity savedEntity = trainService.save(trainEntity);
         Long trainId = savedEntity.getId();
+
+        CNNModelParamsEntity paramsEntity = new CNNModelParamsEntity(trainId);
+        paramsEntity.setBatchSize(32);
+        paramsEntity.setEpochs(2);
+        paramsEntity.setNumClasses(3);
+        paramsEntity.setResizedX(128);
+        paramsEntity.setResizedY(128);
+        cnnModelParamsService.save(paramsEntity);
 
         TrainMiniVGGRequestDto trainRequestDto = new TrainMiniVGGRequestDto(
                 trainId,
@@ -173,11 +168,12 @@ public class TaskAssignmentController {
                     watch.stop();
                     LOG.info("API Response received");
                     TrainTaskEntity updatedEntity = trainService.getTrainTaskEntityById(trainId);
+                    updatedEntity.setComplete(true);
                     updatedEntity.setWeightsFile(trainResponse.getModelPath());
                     updatedEntity.setAccuracy(trainResponse.getAccuracy());
                     updatedEntity.setClassificationReport(trainResponse.getClassificationReport());
                     updatedEntity.setTimeElapsed(watch.getTotalTimeSeconds());
-                    updatedEntity.setLchgTime(new Timestamp(date.getTime()));
+                    updatedEntity.setLchgTime(new Timestamp(System.currentTimeMillis()));
                     trainService.save(updatedEntity);
                 });
 

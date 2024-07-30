@@ -1,5 +1,5 @@
 package leviticus.master.enums;
 
 public enum ClassificationModelType {
-    LBP, MINIVGG
+    LBP, MINIVGG, DEFAULT
 }

@@ -1,15 +1,15 @@
-package leviticus.master.service;
+package leviticus.master.service.taskService;
 
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
 import leviticus.master.exception.ResourceNotFoundException;
-import leviticus.master.repository.ITrainTaskRepository;
+import leviticus.master.repository.taskRepository.ITrainTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class TrainTaskEntityService extends BaseService<TrainTaskEntity> {
+public class TrainTaskEntityService extends TaskService<TrainTaskEntity> {
     @Autowired
     private ITrainTaskRepository trainTaskRepository;
 

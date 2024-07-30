@@ -12,29 +12,24 @@ public class TrainLBPRequestFormModel extends TrainRequestFormModel{
     private Double C;
 
     public TrainLBPRequestFormModel() {
-        super();
-        setModelType(ClassificationModelType.LBP);
+        super(ClassificationModelType.LBP);
     }
 
     public TrainLBPRequestFormModel(
-            OptimizerType optimizerType,
             String dataset,
-            Boolean isTrainOnly,
-            Boolean isCrossValidated
+            Boolean isTrainOnly
     ) {
-        super(ClassificationModelType.LBP, optimizerType, dataset, isTrainOnly, isCrossValidated);
+        super(ClassificationModelType.LBP, dataset, isTrainOnly);
     }
 
     public TrainLBPRequestFormModel(
-            OptimizerType optimizerType,
             String dataset,
             Boolean isTrainOnly,
-            Boolean isCrossValidated,
             Integer numPoints,
             Integer radius,
             Double C
     ) {
-        super(ClassificationModelType.LBP, optimizerType, dataset, isTrainOnly, isCrossValidated);
+        super(ClassificationModelType.LBP, dataset, isTrainOnly);
         this.numPoints = numPoints;
         this.radius = radius;
         this.C = C;

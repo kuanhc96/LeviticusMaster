@@ -9,7 +9,7 @@
 <div>
     <h1>Train MiniVGG Request Form</h1>
 </div>
-    <form action="#" th:action="@{/jobs/submitSelectionMiniVGG}" th:object="${trainMiniVGGRequestFormModel}" method="post">
+    <form action="#" th:action="@{/jobs/trainMiniVGG}" th:object="${trainMiniVGGRequestFormModel}" method="post">
     <div>
         <h2>Choose Optimizer Type</h2>
         <input type="radio" id="SGD" name="optimizerType" value="SGD" th:field="*{optimizerType}"/>
@@ -24,11 +24,6 @@
         <h2>Perform Training Only? (No Test Set)</h2>
         <input type="checkbox" id="trainOnly" th:field="*{isTrainOnly}" />
         <label for="trainOnly">Train Only?</label><br/>
-    </div>
-    <div>
-        <h2>Perform Cross Validation Parameter Search?</h2>
-        <input type="checkbox" id="crossValidated" th:field="*{isCrossValidated}" />
-        <label for="crossValidated">Cross Validation Parameter Search?</label><br/>
     </div>
     <div>
         <button type="submit">Submit</button>
