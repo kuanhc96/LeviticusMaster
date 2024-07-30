@@ -1,7 +1,6 @@
-package leviticus.master.model;
+package leviticus.master.model.train;
 
 import leviticus.master.enums.ClassificationModelType;
-import leviticus.master.enums.OptimizerType;
 
 public class TrainLBPRequestFormModel extends TrainRequestFormModel{
 
