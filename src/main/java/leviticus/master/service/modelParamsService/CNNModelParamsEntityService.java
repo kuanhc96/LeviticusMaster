@@ -13,4 +13,8 @@ public class CNNModelParamsEntityService {
     public CNNModelParamsEntity save(CNNModelParamsEntity modelEntity) {
         return cnnModelParamsRepository.save(modelEntity);
     }
+
+    public Iterable<CNNModelParamsEntity> findAll() {
+        return cnnModelParamsRepository.findAll();
+    }
 }

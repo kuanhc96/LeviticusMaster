@@ -14,4 +14,8 @@ public class LBPModelParamsEntityService {
         return lbpModelParamsRepository.save(modelEntity);
     }
 
+    public Iterable<LBPModelParamsEntity> findAll() {
+        return lbpModelParamsRepository.findAll();
+    }
+
 }
