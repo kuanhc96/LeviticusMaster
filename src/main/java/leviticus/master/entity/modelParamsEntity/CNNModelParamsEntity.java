@@ -3,8 +3,6 @@ package leviticus.master.entity.modelParamsEntity;
 import jakarta.persistence.Entity;
 import leviticus.master.entity.AbstractModelParamsEntity;
 
-import java.sql.Timestamp;
-
 @Entity
 public class CNNModelParamsEntity extends AbstractModelParamsEntity {
     private Integer resizedX;
