@@ -56,7 +56,7 @@ public class TaskAssignmentController {
     @Autowired
     private Map<ClassificationModelType, Integer> router;
 
-    @PostMapping(value = "/submitSelectionLBP")
+    @PostMapping(value = "/trainLBP")
     public String submitForm(TrainLBPRequestFormModel trainRequestFormModel, Model model) {
         LOG.info("entered into submitSelectionLBP API");
         ClassificationModelType modelType = trainRequestFormModel.getModelType();
@@ -120,7 +120,7 @@ public class TaskAssignmentController {
     }
 
 
-    @PostMapping(value = "/submitSelectionMiniVGG")
+    @PostMapping(value = "/trainMiniVGG")
     public String submitForm(TrainMiniVGGRequestFormModel trainRequestFormModel, Model model) {
         LOG.info("entered into submitSelectionMiniVGG API");
         ClassificationModelType modelType = trainRequestFormModel.getModelType();
