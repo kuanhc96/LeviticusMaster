@@ -16,8 +16,6 @@ public class PredictTaskEntity extends AbstractTaskEntity {
 
     private Double accuracy;
 
-    private String weightsFile;
-
     private String classificationReport;
 
     public PredictTaskEntity() {
@@ -46,14 +44,12 @@ public class PredictTaskEntity extends AbstractTaskEntity {
             Long trainId,
             Double accuracy,
             String dataset,
-            String weightsFile,
             String classificationReport
     ) {
         super(modelType, lchgTime, timeElapsed, isComplete);
         this.trainId = trainId;
         this.dataset = dataset;
         this.accuracy = accuracy;
-        this.weightsFile = weightsFile;
         this.classificationReport = classificationReport;
     }
 
@@ -79,14 +75,6 @@ public class PredictTaskEntity extends AbstractTaskEntity {
 
     public void setAccuracy(Double accuracy) {
         this.accuracy = accuracy;
-    }
-
-    public String getWeightsFile() {
-        return weightsFile;
-    }
-
-    public void setWeightsFile(String weightsFile) {
-        this.weightsFile = weightsFile;
     }
 
     public String getClassificationReport() {
