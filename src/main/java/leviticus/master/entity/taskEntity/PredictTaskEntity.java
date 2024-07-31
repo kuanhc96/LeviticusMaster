@@ -5,6 +5,7 @@ import leviticus.master.entity.AbstractTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
 
 import java.sql.Timestamp;
+import java.util.Map;
 
 @Entity
 public class PredictTaskEntity extends AbstractTaskEntity {
@@ -17,6 +18,8 @@ public class PredictTaskEntity extends AbstractTaskEntity {
     private Double accuracy;
 
     private String classificationReport;
+
+    private Map<String, String> predictions;
 
     public PredictTaskEntity() {
         super();
@@ -44,13 +47,15 @@ public class PredictTaskEntity extends AbstractTaskEntity {
             Long trainId,
             Double accuracy,
             String dataset,
-            String classificationReport
+            String classificationReport,
+            Map<String, String> predictions
     ) {
         super(modelType, lchgTime, timeElapsed, isComplete);
         this.trainId = trainId;
         this.dataset = dataset;
         this.accuracy = accuracy;
         this.classificationReport = classificationReport;
+        this.predictions = predictions;
     }
 
     public Long getTrainId() {
@@ -83,6 +88,14 @@ public class PredictTaskEntity extends AbstractTaskEntity {
 
     public void setClassificationReport(String classificationReport) {
         this.classificationReport = classificationReport;
+    }
+
+    public Map<String, String> getPredictions() {
+        return predictions;
+    }
+
+    public void setPredictions(Map<String, String> predictions) {
+        this.predictions = predictions;
     }
 }
 

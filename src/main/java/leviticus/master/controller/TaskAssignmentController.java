@@ -116,10 +116,11 @@ public class TaskAssignmentController {
                     LOG.info("API Response received");
                     PredictTaskEntity updatedEntity = predictService.findById(predictId);
                     updatedEntity.setComplete(true);
-                    updatedEntity.setAccuracy(predictResponse.getAccuracy());
-                    updatedEntity.setClassificationReport(predictResponse.getClassificationReport());
                     updatedEntity.setTimeElapsed(watch.getTotalTimeSeconds());
                     updatedEntity.setLchgTime(new Timestamp(System.currentTimeMillis()));
+                    updatedEntity.setAccuracy(predictResponse.getAccuracy());
+                    updatedEntity.setClassificationReport(predictResponse.getClassificationReport());
+                    updatedEntity.setPredictions(predictResponse.getPredictions());
                     predictService.save(updatedEntity);
                 });
 
