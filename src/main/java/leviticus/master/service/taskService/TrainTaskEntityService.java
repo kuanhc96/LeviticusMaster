@@ -17,7 +17,7 @@ public class TrainTaskEntityService extends TaskService<TrainTaskEntity> {
         return trainTaskRepository.save(trainTask);
     }
 
-    public TrainTaskEntity getTrainTaskEntityById(Long id) {
+    public TrainTaskEntity findById(Long id) {
 
         Optional<TrainTaskEntity> optionalTrainTaskEntity = trainTaskRepository.findById(id);
         return optionalTrainTaskEntity.orElse(null);

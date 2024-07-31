@@ -18,4 +18,8 @@ public class LBPModelParamsEntityService {
         return lbpModelParamsRepository.findAll();
     }
 
+    public LBPModelParamsEntity findByTrainId(Long trainId) {
+        return lbpModelParamsRepository.findByTrainId(trainId).orElse(null);
+    }
+
 }

@@ -16,7 +16,7 @@ public class PredictTaskEntityService extends TaskService<PredictTaskEntity> {
         return predictTaskRepository.save(trainTask);
     }
 
-    public PredictTaskEntity getPredictTaskEntityById(Long id) {
+    public PredictTaskEntity findById(Long id) {
 
         Optional<PredictTaskEntity> optionalPredictTaskEntity = predictTaskRepository.findById(id);
         return optionalPredictTaskEntity.orElse(null);
