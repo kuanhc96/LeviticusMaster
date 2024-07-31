@@ -16,6 +16,8 @@ public class PredictTaskEntity extends AbstractTaskEntity {
 
     private Double accuracy;
 
+    private String weightsFile;
+
     public PredictTaskEntity() {
         super();
     }
@@ -41,12 +43,14 @@ public class PredictTaskEntity extends AbstractTaskEntity {
             Double timeElapsed,
             Long trainId,
             Double accuracy,
-            String dataset
+            String dataset,
+            String weightsFile
     ) {
         super(modelType, lchgTime, timeElapsed, isComplete);
         this.trainId = trainId;
         this.dataset = dataset;
         this.accuracy = accuracy;
+        this.weightsFile = weightsFile;
     }
 
     public Long getTrainId() {
@@ -71,6 +75,14 @@ public class PredictTaskEntity extends AbstractTaskEntity {
 
     public void setAccuracy(Double accuracy) {
         this.accuracy = accuracy;
+    }
+
+    public String getWeightsFile() {
+        return weightsFile;
+    }
+
+    public void setWeightsFile(String weightsFile) {
+        this.weightsFile = weightsFile;
     }
 }
 
