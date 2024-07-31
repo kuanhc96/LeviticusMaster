@@ -12,8 +12,8 @@ public class PredictLBPRequestDto extends PredictRequestDto {
         super(trainId);
     }
 
-    public PredictLBPRequestDto(Long trainId, String trainDataset, String predictDataset) {
-        super(trainId, trainDataset, predictDataset);
+    public PredictLBPRequestDto(Long trainId, String trainDataset, String predictDataset, String weightsFile) {
+        super(trainId, trainDataset, predictDataset, weightsFile);
 
     }
 
@@ -21,10 +21,11 @@ public class PredictLBPRequestDto extends PredictRequestDto {
             Long trainId,
             String trainDataset,
             String predictDataset,
+            String weightsFile,
             Integer numPoints,
             Integer radius
     ) {
-        super(trainId, trainDataset, predictDataset);
+        super(trainId, trainDataset, predictDataset, weightsFile);
         this.numPoints = numPoints;
         this.radius = radius;
     }
