@@ -1,11 +1,16 @@
 package leviticus.master.controller;
 
+import leviticus.master.dto.predictRequest.PredictLBPRequestDto;
+import leviticus.master.dto.predictRequest.PredictMiniVGGRequestDto;
+import leviticus.master.dto.predictRequest.PredictRequestDto;
+import leviticus.master.dto.predictResponse.PredictResponseDto;
 import leviticus.master.dto.trainRequest.TrainLBPRequestDto;
 import leviticus.master.dto.trainRequest.TrainMiniVGGRequestDto;
 import leviticus.master.dto.trainResponse.TrainLBPResponseDto;
 import leviticus.master.dto.trainResponse.TrainMiniVGGResponseDto;
 import leviticus.master.entity.modelParamsEntity.CNNModelParamsEntity;
 import leviticus.master.entity.modelParamsEntity.LBPModelParamsEntity;
+import leviticus.master.entity.taskEntity.PredictTaskEntity;
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
 import leviticus.master.enums.OptimizerType;
@@ -61,8 +66,64 @@ public class TaskAssignmentController {
     @PostMapping(value = "/predict")
     public String predict(PredictRequestFormModel predictRequestFormModel, Model model) {
         LOG.info("entered into predict API");
-        LOG.info("trainId:" + predictRequestFormModel.getTrainId());
-        LOG.info("dataset:" + predictRequestFormModel.getDataset());
+        Long trainId = predictRequestFormModel.getTrainId();
+        String predictDataset = predictRequestFormModel.getDataset();
+
+        TrainTaskEntity trainTaskEntity = trainService.findById(trainId);
+        ClassificationModelType modelType = trainTaskEntity.getModelType();
+        String trainDataset = trainTaskEntity.getDataset();
+        String weightsFile = trainTaskEntity.getWeightsFile();
+
+        if (!trainTaskEntity.isComplete()) {
+            throw new IllegalStateException("This Training task is not complete and cannot be used for prediction");
+        }
+
+        PredictTaskEntity predictTaskEntity = new PredictTaskEntity();
+        predictTaskEntity.setTrainId(trainId);
+        predictTaskEntity.setDataset(predictDataset);
+        predictTaskEntity.setModelType(modelType);
+
+        PredictTaskEntity savedEntity = predictService.save(predictTaskEntity);
+        Long predictId = savedEntity.getId();
+
+        PredictRequestDto predictRequestDto;
+        if (modelType.equals(ClassificationModelType.LBP)) {
+            LBPModelParamsEntity lbpModelParamsEntity = lbpModelParamsService.findByTrainId(trainId);
+            Integer numPoints = lbpModelParamsEntity.getNumPoints();
+            Integer radius = lbpModelParamsEntity.getRadius();
+            predictRequestDto = new PredictLBPRequestDto(trainId, trainDataset, predictDataset, weightsFile, numPoints, radius);
+        } else if (modelType.equals(ClassificationModelType.MINIVGG)) {
+            CNNModelParamsEntity cnnModelParamsEntity = cnnModelParamsService.findByTrainId(trainId);
+            predictRequestDto = new PredictMiniVGGRequestDto(trainId, trainDataset, predictDataset, weightsFile);
+        } else {
+            throw new IllegalStateException("invalid classification model type");
+        }
+
+        String baseUrl = "http://fastapi-" + modelType.toString().toLowerCase() + ":" + router.get(modelType);
+        String endpoint = "/predict";
+
+        StopWatch watch = new StopWatch();
+        watch.start();
+
+        WebClient webClient = webClientBuilder.baseUrl(baseUrl).build();
+        webClient.post()
+                .uri(endpoint)
+                .body(Mono.just(predictRequestDto), predictRequestDto.getClass())
+                .retrieve()
+                .bodyToMono(PredictResponseDto.class)
+                .subscribe(predictResponse -> {
+                    watch.stop();
+                    LOG.info("API Response received");
+                    PredictTaskEntity updatedEntity = predictService.findById(predictId);
+                    updatedEntity.setComplete(true);
+                    updatedEntity.setAccuracy(predictResponse.getAccuracy());
+                    updatedEntity.setClassificationReport(predictResponse.getClassificationReport());
+                    updatedEntity.setTimeElapsed(watch.getTotalTimeSeconds());
+                    updatedEntity.setLchgTime(new Timestamp(System.currentTimeMillis()));
+                    predictService.save(updatedEntity);
+                });
+
+
         return "redirect:/templates";
     }
 
@@ -114,7 +175,7 @@ public class TaskAssignmentController {
                 .bodyToMono(trainResponseDtoClass)
                 .subscribe(trainResponse -> {
                     watch.stop();
-                    TrainTaskEntity updatedEntity = trainService.getTrainTaskEntityById(trainId);
+                    TrainTaskEntity updatedEntity = trainService.findById(trainId);
                     updatedEntity.setComplete(true);
                     updatedEntity.setWeightsFile(trainResponse.getModelPath());
                     updatedEntity.setAccuracy(trainResponse.getAccuracy());
@@ -176,7 +237,7 @@ public class TaskAssignmentController {
                 .subscribe(trainResponse -> {
                     watch.stop();
                     LOG.info("API Response received");
-                    TrainTaskEntity updatedEntity = trainService.getTrainTaskEntityById(trainId);
+                    TrainTaskEntity updatedEntity = trainService.findById(trainId);
                     updatedEntity.setComplete(true);
                     updatedEntity.setWeightsFile(trainResponse.getModelPath());
                     updatedEntity.setAccuracy(trainResponse.getAccuracy());
