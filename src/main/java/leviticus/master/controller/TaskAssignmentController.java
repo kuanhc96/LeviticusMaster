@@ -91,7 +91,9 @@ public class TaskAssignmentController {
             LBPModelParamsEntity lbpModelParamsEntity = lbpModelParamsService.findByTrainId(trainId);
             Integer numPoints = lbpModelParamsEntity.getNumPoints();
             Integer radius = lbpModelParamsEntity.getRadius();
-            predictRequestDto = new PredictLBPRequestDto(trainId, trainDataset, predictDataset, weightsFile, numPoints, radius);
+            predictRequestDto = new PredictLBPRequestDto(
+                    trainId, trainDataset, predictDataset, weightsFile, numPoints, radius
+            );
         } else if (modelType.equals(ClassificationModelType.MINIVGG)) {
             CNNModelParamsEntity cnnModelParamsEntity = cnnModelParamsService.findByTrainId(trainId);
             predictRequestDto = new PredictMiniVGGRequestDto(trainId, trainDataset, predictDataset, weightsFile);
