@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Predict Results</title>
 </head>
 <body>
+<h2>Predict Task Table</h2>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>trainId</th>
+        <th>lchgTime</th>
+        <th>timeElapsed</th>
+        <th>isComplete</th>
+        <th>dataset</th>
+        <th>accuracy</th>
+        <th>classificationReport</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="predictTaskEntity : ${predictTaskEntities}">
+        <td th:text="${predictTaskEntity.id}"></td>
+        <td th:text="${predictTaskEntity.trainId}"></td>
+        <td th:text="${predictTaskEntity.lchgTime}"></td>
+        <td th:text="${predictTaskEntity.timeElapsed}"></td>
+        <td th:text="${predictTaskEntity.isComplete}"></td>
+        <td th:text="${predictTaskEntity.dataset}"></td>
+        <td th:text="${predictTaskEntity.accuracy}"></td>
+        <td th:text="${predictTaskEntity.classificationReport}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<button onclick="window.location.href='/templates'">Back</button>
 
 </body>
 </html>
