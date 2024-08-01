@@ -2,12 +2,14 @@ package leviticus.master.controller;
 
 import leviticus.master.entity.modelParamsEntity.CNNModelParamsEntity;
 import leviticus.master.entity.modelParamsEntity.LBPModelParamsEntity;
+import leviticus.master.entity.taskEntity.PredictTaskEntity;
 import leviticus.master.entity.taskEntity.TrainTaskEntity;
 import leviticus.master.model.predict.PredictRequestFormModel;
 import leviticus.master.model.train.TrainLBPRequestFormModel;
 import leviticus.master.model.train.TrainMiniVGGRequestFormModel;
 import leviticus.master.service.modelParamsService.CNNModelParamsEntityService;
 import leviticus.master.service.modelParamsService.LBPModelParamsEntityService;
+import leviticus.master.service.taskService.PredictTaskEntityService;
 import leviticus.master.service.taskService.TrainTaskEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ public class TemplateController {
     private TrainTaskEntityService trainTaskEntityService;
 
     @Autowired
+    private PredictTaskEntityService predictTaskEntityService;
+
+    @Autowired
     private LBPModelParamsEntityService lbpModelParamsEntityService;
 
     @Autowired
@@ -33,6 +38,15 @@ public class TemplateController {
     @GetMapping
     public String getJobs(Model model) {
         return "landing";
+    }
+
+    @GetMapping(value = "/results/predict")
+    public String getPredictResults(Model model) {
+        Iterable<PredictTaskEntity> predictTaskEntities = predictTaskEntityService.findAll();
+        List<PredictTaskEntity> predictTaskEntityList = new ArrayList<>();
+        predictTaskEntities.forEach(p -> predictTaskEntityList.add(p));
+        model.addAttribute("predictTaskEntities", predictTaskEntityList);
+        return "predictResults";
     }
 
     @GetMapping(value = "/results")
