@@ -1,8 +1,13 @@
 package leviticus.master.entity.taskEntity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.MapKeyColumn;
 import leviticus.master.entity.AbstractTaskEntity;
 import leviticus.master.enums.ClassificationModelType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.sql.Timestamp;
 import java.util.Map;
@@ -17,8 +22,10 @@ public class PredictTaskEntity extends AbstractTaskEntity {
 
     private Double accuracy;
 
+    @Column(length=1024)
     private String classificationReport;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     private Map<String, String> predictions;
 
     public PredictTaskEntity() {
@@ -90,6 +97,9 @@ public class PredictTaskEntity extends AbstractTaskEntity {
         this.classificationReport = classificationReport;
     }
 
+    @ElementCollection
+    @MapKeyColumn(name="key")
+    @Column(name="value")
     public Map<String, String> getPredictions() {
         return predictions;
     }
