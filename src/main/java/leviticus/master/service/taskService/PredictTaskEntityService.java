@@ -12,8 +12,13 @@ import java.util.Optional;
 public class PredictTaskEntityService extends TaskService<PredictTaskEntity> {
     @Autowired
     private IPredictTaskRepository predictTaskRepository;
+
     public PredictTaskEntity save(PredictTaskEntity trainTask) {
         return predictTaskRepository.save(trainTask);
+    }
+
+    public Iterable<PredictTaskEntity> findAll() {
+        return predictTaskRepository.findAll();
     }
 
     public PredictTaskEntity findById(Long id) {
